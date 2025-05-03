@@ -1,0 +1,226 @@
+<h3 class="text-lg font-semibold mb-4">Contact Addresses</h3>
+
+<!-- Permanent/Home -->
+<h4 class="font-bold mb-2">Permanent/Home</h4>
+
+<!-- Street Number -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" name="permanentStreetNumber" [(ngModel)]="student.permanentAddress.streetNumber"
+                 class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+                 placeholder=" " />
+  <label for="streetNumber"
+          class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Street Number
+  </label>
+</div>
+
+<!-- Street Name -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" name="permanentStreetName" [(ngModel)]="student.permanentAddress.streetName"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+<label for="streetName"
+class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+ peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+ peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Street Name
+  </label>
+</div>
+
+<!-- Suburb -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.permanentAddress.suburb" name="permanentSuburb"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+        placeholder=" " />
+    <label for="Suburb"
+         class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Suburb / RD No
+  </label>
+</div>
+
+<!-- City -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.permanentAddress.city" name="permanentCity"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+        placeholder=" " />
+        <label for="City"
+        class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+         peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+         peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Town / City
+  </label>
+</div>
+
+<!-- Country -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.permanentAddress.country" name="permanentCountry"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+         <label for="Country"
+         class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Country
+  </label>
+</div>
+
+<!-- Postcode -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.permanentAddress.postcode" name="permanentPostcode"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+         <label for="Postcode"
+         class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Post code
+  </label>
+</div>
+
+<!-- Phone -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.permanentAddress.phone" name="permanentPhone"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+    <label for="Phone"
+         class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Phone number
+  </label>
+</div>
+
+<!-- Address while studying -->
+<h4 class="font-bold mb-2 mt-6">Address while studying</h4>
+
+<!-- Repeat same structure for studyAddress -->
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.streetNumber" name="studyStreetNumber"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+         <label for="studyStreetNumber"
+         class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Street Number
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.streetName" name="studyStreetName"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+  peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Street Name
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.suburb" name="studySuburb"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Suburb / RD No
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.city" name="studyCity"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Town / City
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.country" name="studyCountry"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Country
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.postcode" name="studyPostcode"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Post code
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.studyAddress.phone" name="studyPhone"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Phone number
+  </label>
+</div>
+
+<!-- Email Address -->
+<h3 class="text-lg font-semibold mt-6 mb-2">Email Address</h3>
+<div class="relative z-0 w-full group mb-2">
+  <input type="email" [(ngModel)]="student.contactEmail" name="contactEmail"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600">
+    Contact Email
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="email" [(ngModel)]="student.confirmEmail" name="confirmEmail"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600">
+    Confirm Contact Email
+  </label>
+</div>
+
+<!-- Emergency Contact -->
+<h3 class="text-lg font-semibold mt-6 mb-2">Emergency Contact</h3>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.emergencyContact.name" name="emergencyName"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Name
+  </label>
+</div>
+
+<div class="relative z-0 w-full group mb-2">
+  <input type="text" [(ngModel)]="student.emergencyContact.relationship" name="emergencyRelationship"
+  class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
+  placeholder=" " />
+  <label class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
+    Relationship to you
+  </label>
+</div>
