@@ -1,23 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Enrolment } from '../../model/interface/enrolment';
-import { ENROLMENT_TABLE_HEADERS } from '../../constant/Constant';
-import { EnrolmentService } from '../../services/enrolment.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-enrolment-info',
-  imports: [CommonModule, RouterModule],
+  imports: [],
   templateUrl: './enrolment-info.component.html',
-  styleUrl: './enrolment-info.component.scss',
+  styleUrl: './enrolment-info.component.scss'
 })
-export class EnrolmentInfoComponent implements OnInit {
-  tableHeaders = ENROLMENT_TABLE_HEADERS;
-  enrolments: Enrolment[] = [];
+export class EnrolmentInfoComponent {
 
-  constructor(private enrolmentService: EnrolmentService) {}
-
-  ngOnInit(): void {
-    this.enrolments = this.enrolmentService.getEnrolments();
-  }
 }

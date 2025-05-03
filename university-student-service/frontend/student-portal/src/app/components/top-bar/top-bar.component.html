@@ -1,14 +1,13 @@
 <div class="top-bar">
   <div class="left-section">
+    <!-- <i class="fas fa-graduation-cap"></i> -->
     <img src="/logo.png" alt="Logo" class="logo-img" />
     <span class="logo-text">University Student Service</span>
   </div>
 
   <div class="right-section">
-    <img [src]="user.imageUrl" alt="Profile" class="profile-img" />
-    <div class="profile-details">
-      <div class="usernname">{{ user.name }}</div>
-      <div class="email">{{ user.email }}</div>
-    </div>
+    <i class="fas fa-user-circle profile-icon"></i>
+    <!-- <img [src]="userImageUrl" alt="User" class="profile-pic" /> -->
+    <span class="email">{{ userEmail }}</span>
   </div>
 </div>
