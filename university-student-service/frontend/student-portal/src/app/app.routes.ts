@@ -4,6 +4,7 @@ import { StudentInfoComponent } from './components/student-info/student-info.com
 import { HomeComponent } from './components/home/home.component';
 import { StudentDocumentsComponent } from './components/student-documents/student-documents.component';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
+import { CourseDetailComponent } from './components/course-detail/course-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -11,5 +12,6 @@ export const routes: Routes = [
   { path: 'student-info', component: StudentInfoComponent },
   { path: 'enrolment-info', component: EnrolmentInfoComponent },
   { path: 'student-documents', component: StudentDocumentsComponent },
-  { path: 'course-info', component: CourseInfoComponent }
+  { path: 'course-info', component: CourseInfoComponent },
+  { path: 'course/:id', component: CourseDetailComponent }
 ];

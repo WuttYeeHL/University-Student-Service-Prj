@@ -20,9 +20,9 @@
       <tbody>
         <tr *ngFor="let course of degree.courses">
           <td>
-            <a [href]="" target="_blank">
+            <a [href]="downloadurl + course.code + '.pdf'" download>
               {{ course.code }}
-            </a>
+            </a> 
           </td>
           <td>{{ course.description }}</td>
           <td>{{ course.points }}</td>

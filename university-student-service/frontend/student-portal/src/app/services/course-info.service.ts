@@ -13,6 +13,10 @@ export class CourseInfoService {
   constructor(private http: HttpClient) {}
   getQualificationInfo() {
     return this.http.get<iQualificationInfo[]>(COURSE_API_URL);
-    //return this.enrolments 
   }
+
+  getQualificationById(id: number) {
+    return this.http.get<iQualificationInfo>(`${COURSE_API_URL}/${id}`);
+  }
+  
 }

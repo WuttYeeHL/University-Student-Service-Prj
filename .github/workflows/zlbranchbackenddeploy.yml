@@ -1,11 +1,13 @@
 name: Deploy .NET App to Windows EC2
 
 on:
+  workflow_dispatch:  # to enables the "Run workflow" button
   push:
     branches: [ZL-work]
-
+    paths:
+      - 'backend/**' 
 jobs:
-  deploy:
+  deploy-backend:
     runs-on: windows-latest
 
     steps:
@@ -46,4 +48,7 @@ jobs:
         user: ${{ secrets.EC2_USERNAME }}
         password: ${{ secrets.EC2_PASSWORD }}
         command: |
+          # Kill any existing dotnet process that runs CourseService
+          Get-Process -Name "CourseService" -ErrorAction SilentlyContinue | Stop-Process -Force
+
           Start-Process "dotnet" -ArgumentList "C:\test\app\CourseService.dll --urls http://0.0.0.0:5000" -WindowStyle Hidden

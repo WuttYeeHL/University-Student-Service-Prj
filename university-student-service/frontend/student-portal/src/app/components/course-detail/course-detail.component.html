@@ -1,0 +1,38 @@
+
+<ng-template #loading>
+  <p>Loading qualification details...</p>
+</ng-template>
+
+<div *ngIf="qualification; else loading">
+  <h2 style="font-weight: bold; color: #007bff;">{{ qualification.code }} - {{ qualification.description }}</h2>
+  <p><strong>Level:</strong> {{ qualification.level }}</p>
+  <p><strong>Points:</strong> {{ qualification.points }}</p>
+
+  <h3>Courses</h3>
+  <ng-container *ngIf="(qualification.courses ?? []).length > 0; else noCourses">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let header of tableHeaders">{{ header }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of qualification.courses ?? []">
+          <td>
+            <a [href]="downloadurl + course.code + '.pdf'" download >
+              {{ course.code }}
+            </a>            
+          </td>
+          <td>{{ course.description }}</td>
+          <td>{{ course.points }}</td>
+        </tr>
+      </tbody>
+    </table>
+</ng-container>
+
+  <ng-template #noCourses>
+    <p>No courses found for this qualification.</p>
+  </ng-template>
+<!-- 
+  <pre>{{ qualification | json }}</pre> -->
+</div>
