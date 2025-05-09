@@ -30,7 +30,7 @@ var secretResponse = await secretsClient.GetSecretValueAsync(new GetSecretValueR
 if (!string.IsNullOrEmpty(secretResponse.SecretString))
 {
     var secrets = JsonSerializer.Deserialize<Dictionary<string, string>>(secretResponse.SecretString);
-    builder.Configuration.AddInMemoryCollection(secrets);
+    builder.Configuration.AddInMemoryCollection(secrets!);
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -69,8 +69,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
