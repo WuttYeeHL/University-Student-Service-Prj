@@ -18,9 +18,9 @@ public class EnrolmentController : ControllerBase
     }
 
     [HttpGet("getEnrolmentByUserId")]
-    public async Task<IActionResult> GetEnrolments([FromBody] EnrolmentRequest request)
+    public async Task<IActionResult> GetEnrolments([FromQuery] int userId)
     {
-        var enrolments = await _enrolmentService.GetEnrolmentsByUserIdAsync(request.UserId);
+        var enrolments = await _enrolmentService.GetEnrolmentsByUserIdAsync(userId);
         return Ok(enrolments);
     }
 }
