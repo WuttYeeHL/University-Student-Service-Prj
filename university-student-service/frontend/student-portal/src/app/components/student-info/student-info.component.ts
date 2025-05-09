@@ -44,10 +44,10 @@ export class StudentInfoComponent implements OnInit {
         console.error('Failed to load student data:', err);
       }
     });
-  }
-  
+  }  
+
   showSuccessMessage = false;
-  saveStudent(): void {
+  saveStudent(): void {    
     this.studentService.updateStudent(this.student).subscribe({
       next: () => {
         this.showSuccessMessage = true;
@@ -57,7 +57,7 @@ export class StudentInfoComponent implements OnInit {
       },
       error: (err) => alert('Failed to save student data: ' + err.message)
     });
-  }
+  }  
 
   addEducation(): void {
     if (!this.student.tertiaryRecords) {
@@ -79,13 +79,23 @@ export class StudentInfoComponent implements OnInit {
   onProfileImageSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.student.profileImage = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      this.studentService.uploadProfileImage(formData).subscribe({
+        next: (res) => {
+          this.student.profileImage = res.url; // Save the URL returned by backend
+        },
+        error: (err) => console.error('Failed to upload image:', err)
+      });
     }
   }
+  
+  getProfileImageUrl(key: string): string {
+    key = "profiles/" + key;
+    return `https://kllprofileimgbucket.s3.amazonaws.com/${key}`;
+  }
+  
 
   isFormInvalid(): boolean {
     return !this.student.preferred_First_Name || 

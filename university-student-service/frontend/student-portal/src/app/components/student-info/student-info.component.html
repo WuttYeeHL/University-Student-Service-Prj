@@ -1,8 +1,9 @@
-<!-- Tabs -->
+
 <div *ngIf="showSuccessMessage"
-class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg">
-Student and Education records saved successfully.
+     class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg">
+  Student and Education records saved successfully.
 </div>
+<!-- Tabs -->
 <div class="flex space-x-2 border-b mb-4">
   <button
     class="px-4 py-2"
@@ -35,12 +36,7 @@ Student and Education records saved successfully.
   <div class="flex flex-col md:flex-row gap-6">
     <!-- Profile Image -->
     <div class="flex flex-col items-center">
-      <img
-        [src]="student.profileImage || defaultProfileImage"
-        alt="Profile Image"
-        class="profile-img"
-      />
-
+      <img [src]="getProfileImageUrl(student.profileImage)" class="rounded-full w-32 h-32" />
       <input type="file" (change)="onProfileImageSelected($event)" class="hidden" #fileInput />
       <button
         class="mt-2 bg-blue-700 text-white px-4 py-2 rounded"
@@ -53,13 +49,8 @@ Student and Education records saved successfully.
     <!-- Personal Fields -->
     <div class="flex-1 space-y-4">
       <div>
-        <label>Title <span class="text-red-600">*</span></label>
-        <select [(ngModel)]="student.title" class="border p-2 w-full col-span-2">
-          <option>Mr.</option>
-          <option>Mrs.</option>
-          <option>Ms.</option>
-          <option>Miss.</option>
-        </select>
+        <label>Title:</label>
+        <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.title" />
       </div>
 
       <div>
@@ -86,26 +77,26 @@ Student and Education records saved successfully.
   <div class="mt-6 space-y-4">
     <div>
       <label>Gender <span class="text-red-600">*</span></label>
-      <select [(ngModel)]="student.gender" class="border p-2 w-full col-span-2">
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-      </select>
+      <input type="text" [(ngModel)]="student.gender" name="gender" required #gender="ngModel"
+        class="w-full border px-2 py-1" />
+      <div class="text-red-600 text-sm" *ngIf="gender.invalid && gender.touched">
+        Gender is required.
+      </div>
     </div>
 
     <div>
       <label>Full Name:</label>
-      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.name" readonly/>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.name" />
     </div>
     <div>
       <label>Passport:</label>
-      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.passport" readonly/>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.passport" />
     </div>
     
     <div>
       <label>Country <span class="text-red-600">*</span></label>
       <input type="text" [(ngModel)]="student.country" name="country" required #country="ngModel"
-        class="w-full border px-2 py-1" readonly/>
+        class="w-full border px-2 py-1" />
       <div class="text-red-600 text-sm" *ngIf="country.invalid && country.touched">
         Country is required.
       </div>
@@ -114,7 +105,7 @@ Student and Education records saved successfully.
     <div>
       <label>Date of Birth <span class="text-red-600">*</span></label>
       <input type="date" [(ngModel)]="student.dateOfBirth" name="dateOfBirth" required #dob="ngModel"
-        class="w-full border px-2 py-1" readonly/>
+        class="w-full border px-2 py-1" />
       <div class="text-red-600 text-sm" *ngIf="dob.invalid && dob.touched">
         Date of Birth is required.
       </div>
@@ -213,6 +204,7 @@ Student and Education records saved successfully.
       Contact Email is required.
     </div>
   </div>
+
   <div>
     <label>Confirm Email <span class="text-red-600">*</span></label>
     <input type="email" [(ngModel)]="student.confirm_Email" name="confirm_Email" required #confirmemail="ngModel"
@@ -253,3 +245,4 @@ Student and Education records saved successfully.
 <button (click)="saveStudent()" [disabled]="isFormInvalid()" class="bg-blue-700 text-white px-4 py-2 rounded mt-4">
   Save Student and Education Records
 </button>
+

@@ -1,4 +1,8 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Amazon;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.S3;
+using StudentService;
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
@@ -17,6 +21,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<StudentService.Data.IStudentRepository, StudentService.Data.StudentRepository>();
+
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddSingleton<StudentService.Data.StudentRepository>();
+
 
 var app = builder.Build();
 

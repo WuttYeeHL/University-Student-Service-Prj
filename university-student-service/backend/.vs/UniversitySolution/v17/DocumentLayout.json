@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|c:\\kll\\aut\\semester2\\cloud computing\\university-student-service-prj\\university-student-service\\backend\\studentservice\\data\\studentservice.data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|solutionrelative:studentservice\\data\\studentservice.data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|c:\\kll\\aut\\semester2\\cloud computing\\university-student-service-prj\\university-student-service\\backend\\studentservice\\controller\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|solutionrelative:studentservice\\controller\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +35,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StudentService.Data.cs",
+              "DocumentMoniker": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Data\\StudentService.Data.cs",
+              "RelativeDocumentMoniker": "StudentService\\Data\\StudentService.Data.cs",
+              "ToolTip": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Data\\StudentService.Data.cs",
+              "RelativeToolTip": "StudentService\\Data\\StudentService.Data.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAADwv34AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-09T08:24:46.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Controller\\StudentController.cs",
+              "RelativeDocumentMoniker": "StudentService\\Controller\\StudentController.cs",
+              "ToolTip": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Controller\\StudentController.cs",
+              "RelativeToolTip": "StudentService\\Controller\\StudentController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-09T08:23:56.458Z",
+              "EditorCaption": ""
             }
           ]
         }

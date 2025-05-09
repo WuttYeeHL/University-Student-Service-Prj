@@ -21,4 +21,9 @@ export class StudentService {
   updateStudent(student: Student): Observable<any> {
     return this.http.put(this.apiUrl + '/Students', student);
   }
+
+  uploadProfileImage(formData: FormData): Observable<{ url: string }> {
+    return this.http.post<{ url: string }>(`${this.apiUrl}/Students/UploadProfileImage`, formData);
+  }
+  
 }

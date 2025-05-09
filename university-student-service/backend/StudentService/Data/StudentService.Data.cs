@@ -1,6 +1,10 @@
 ﻿using StudentService.Model;
 using System.Data.SqlClient;
 using Dapper;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Microsoft.AspNetCore.Mvc;
+using Amazon.S3.Transfer;
 
 namespace StudentService.Data
 {
@@ -8,14 +12,44 @@ namespace StudentService.Data
     {
         Student GetByUserId(int userId);
         void Update(Student student);
+        Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId);
     }
     public class StudentRepository : IStudentRepository
     {
         private readonly string _connectionString;
 
-        public StudentRepository(IConfiguration configuration)
+        private readonly IAmazonS3 _s3Client;
+        private readonly string _bucketName = "kllprofileimgbucket";
+
+        public StudentRepository(IConfiguration configuration, IAmazonS3 s3Client)
         {
+            _s3Client = s3Client;
+            _bucketName = configuration["AWS:BucketName"];
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }        
+
+        public async Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId)
+        {
+            //if (file == null || file.Length == 0)
+            //    throw new ArgumentException("Invalid file");
+
+            var fileExtension = Path.GetExtension(model.File.FileName);
+            var key = $"profiles/{studentId}{fileExtension}";
+
+            using (var stream = model.File.OpenReadStream())
+            {
+                var uploadRequest = new TransferUtilityUploadRequest
+                {
+                    InputStream = stream,
+                    Key = key,
+                    BucketName = _bucketName,
+                    ContentType = model.File.ContentType
+                };
+
+                var transferUtility = new TransferUtility(_s3Client);
+                await transferUtility.UploadAsync(uploadRequest);
+            }
+            return $"{studentId}{fileExtension}";
         }
 
         public Student GetByUserId(int userId)
