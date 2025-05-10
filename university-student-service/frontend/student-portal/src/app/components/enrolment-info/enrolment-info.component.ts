@@ -18,6 +18,10 @@ export class EnrolmentInfoComponent implements OnInit {
   constructor(private enrolmentService: EnrolmentService) {}
 
   ngOnInit(): void {
-    this.enrolments = this.enrolmentService.getEnrolments();
+    const userId = '1';
+    this.enrolmentService.getEnrolments(userId).subscribe({
+      next: (data) => (this.enrolments = data),
+      error: (err) => console.error('Failed to load enrolments', err),
+    });
   }
 }

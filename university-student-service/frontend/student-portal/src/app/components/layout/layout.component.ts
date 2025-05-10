@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject, input, output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { User } from '../../model/interface/user';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/guards/auth-guard.service';
 
 @Component({
   selector: 'app-layout',
@@ -11,9 +11,15 @@ import { UserService } from '../../services/user.service';
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
-  user: User;
+  user: User = {
+    name: 'Florence',
+    email: 'florence123@gmail.com',
+    imageUrl: 'profilepic.png',
+  };
+
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
+  router = inject(Router);
   items = [
     {
       routeLink: 'home',
@@ -50,7 +56,12 @@ export class LayoutComponent {
     this.changeIsLeftSidebarCollapsed.emit(true);
   }
 
-  constructor(private userService: UserService) {
-    this.user = this.userService.getUser();
+  constructor(private authService: AuthService) {}
+
+  onLogout() {
+    // Clear user session or token
+    // sessionStorage.clear();
+    // this.router.navigateByUrl('/login');
+    this.authService.logout();
   }
 }
