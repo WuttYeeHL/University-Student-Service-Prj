@@ -1,169 +1,248 @@
-<div class="flex flex-col md:flex-row bg-gray-50 p-6 rounded-xl shadow-lg">
-  <!-- Left Sidebar -->
-  <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow w-full md:w-1/3">
-    <img [src]="student.profileImage || 'https://www.gravatar.com/avatar/?d=mp&f=y'"
-         alt="Profile"
-         class="rounded-full w-40 h-40 mb-4 object-cover border">
 
-    <label class="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer mb-4">
-      Upload Profile Image
-      <input type="file" (change)="onImageSelected($event)" accept="image/*" class="hidden">
-    </label>
-
-  </div>
-
-  <!-- Right Content -->
-  <div class="grid md:grid-cols-2 gap-2">
-    <div class="flex-1 p-6 bg-white rounded-xl shadow ml-0 md:ml-6 mt-6 md:mt-0">
-      <h2 class="text-xl font-semibold mb-4">Name and Title</h2>
-      <form (ngSubmit)="submitForm()" class="space-y-6">
-
-        <!-- Title -->
-        <div class="relative z-0 w-full group">
-          <select [(ngModel)]="student.title"
-                  class="block py-2.5 px-0 w-full border-0 border-b-2 border-gray-300 focus:border-blue-600 peer">
-            <option>Ms</option>
-            <option>Miss</option>
-            <option>Mrs</option>
-            <option>Mr</option>
-          </select>
-          <label 
-              class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-              peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Title *
-          </label>
-        </div>
-        <!-- First Name -->
-        <div class="relative z-0 w-full group">
-          <input type="text" name="name" [(ngModel)]="student.pfname" required
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-                placeholder=" " />
-          <label for="firstname"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Preferred First Name *
-          </label>
-        </div>
-
-        <!-- Last name -->
-        <div class="relative z-0 w-full group">
-          <input type="text" name="about" [(ngModel)]="student.plname" required
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-                placeholder=" " />
-          <label for="lastname"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Preferred Last Name *
-          </label>
-        </div>
-
-        <!-- Gender -->
-        <div class="relative z-0 w-full group">
-          <select [(ngModel)]="student.gender"
-                  class="block py-2.5 px-0 w-full border-0 border-b-2 border-gray-300 focus:border-blue-600 peer">
-            <option>Female</option>
-            <option>Male</option>
-            <option>Other Gender</option>
-          </select>
-          <label 
-              class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-              peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Gender *
-          </label>
-        </div>
-
-        <button type="submit"
-                class="bg-green-600 text-white px-4 py-2 rounded-lg">
-          Save Changes
-        </button>
-      </form>
-    </div>
-    <div class="flex-1 p-6 bg-white rounded-xl shadow ml-0 md:ml-6 mt-6 md:mt-0">
-      <h2 class="text-xl font-semibold mb-4">Personal Information</h2>
-      <form (ngSubmit)="submitForm()" class="space-y-6">
-
-        <!-- Full Name -->
-        <div class="relative z-0 w-full group">
-          <input type="email" name="email" [(ngModel)]="student.fullname" required
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" " readonly/>
-          <label for="fullname"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600">
-            Name *
-          </label>
-        </div>
-
-        <!-- Passport -->
-        <div class="relative z-0 w-full group">
-          <input type="text" name="name" [(ngModel)]="student.passport" required
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-                placeholder=" " readonly/>
-          <label for="passport"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Passport *
-          </label>
-        </div>
-
-        <!-- country -->
-        <div class="relative z-0 w-full group">
-          <input type="text" name="about" [(ngModel)]="student.country" required
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-                placeholder=" " readonly/>
-          <label for="country"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Country *
-          </label>
-        </div>
-
-        <!-- DOB -->
-        <div class="relative z-0 w-full group">
-          <input type="text" name="address" [(ngModel)]="student.dateofbirth"
-                class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-                placeholder=" " readonly/>
-          <label for="dateofbirth"
-                class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-            Date of Birth *
-          </label>
-        </div>
-      </form>
-    </div>
-  </div>
+<div *ngIf="showSuccessMessage"
+     class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg">
+  Student and Education records saved successfully.
 </div>
-
-
-<!-- Main Tabs -->
-<div class="mb-4 border-b border-gray-300 pb-2">
-  <button (click)="activeTab = 'contact'" 
-          [class.active]="activeTab === 'contact'" 
-          class="tab-button">
+<!-- Tabs -->
+<div class="flex space-x-2 border-b mb-4">
+  <button
+    class="px-4 py-2"
+    [class.bg-blue-700]="activeTab === 'personal'"
+    [class.text-white]="activeTab === 'personal'"
+    (click)="activeTab = 'personal'"
+  >
+    PERSONAL INFO
+  </button>
+  <button
+    class="px-4 py-2"
+    [class.bg-blue-700]="activeTab === 'contact'"
+    [class.text-white]="activeTab === 'contact'"
+    (click)="activeTab = 'contact'"
+  >
     CONTACT INFO
   </button>
-
-  <button (click)="activeTab = 'education'" 
-          [class.active]="activeTab === 'education'" 
-          class="tab-button">
+  <button
+    class="px-4 py-2"
+    [class.bg-blue-700]="activeTab === 'education'"
+    [class.text-white]="activeTab === 'education'"
+    (click)="activeTab = 'education'"
+  >
     TERTIARY EDUCATION
   </button>
 </div>
 
-<!-- Tab Content -->
-<div *ngIf="activeTab === 'contact'">
-    <app-student-contact></app-student-contact>
+<!-- PERSONAL INFO TAB -->
+<div *ngIf="activeTab === 'personal'" class="p-4 border rounded-md bg-white">
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Profile Image -->
+    <div class="flex flex-col items-center">
+      <img [src]="getProfileImageUrl(student.profileImage)" class="rounded-full w-32 h-32" />
+      <input type="file" (change)="onProfileImageSelected($event)" class="hidden" #fileInput />
+      <button
+        class="mt-2 bg-blue-700 text-white px-4 py-2 rounded"
+        (click)="fileInput.click()"
+      >
+        Upload Image
+      </button>
+    </div>
+
+    <!-- Personal Fields -->
+    <div class="flex-1 space-y-4">
+      <div>
+        <label>Title:</label>
+        <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.title" />
+      </div>
+
+      <div>
+        <label>Preferred First Name <span class="text-red-600">*</span></label>
+        <input type="text" [(ngModel)]="student.preferred_First_Name" name="preferred_First_Name" required #preferredFirstName="ngModel"
+          class="w-full border px-2 py-1" />
+        <div class="text-red-600 text-sm" *ngIf="preferredFirstName.invalid && preferredFirstName.touched">
+          Preferred First Name is required.
+        </div>
+      </div>
+      
+      <div>
+        <label>Preferred Last Name <span class="text-red-600">*</span></label>
+        <input type="text" [(ngModel)]="student.preferred_Last_Name" name="preferred_Last_Name" required #preferredLastName="ngModel"
+          class="w-full border px-2 py-1" />
+        <div class="text-red-600 text-sm" *ngIf="preferredLastName.invalid && preferredLastName.touched">
+          Preferred Last Name is required.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-6 space-y-4">
+    <div>
+      <label>Gender <span class="text-red-600">*</span></label>
+      <input type="text" [(ngModel)]="student.gender" name="gender" required #gender="ngModel"
+        class="w-full border px-2 py-1" />
+      <div class="text-red-600 text-sm" *ngIf="gender.invalid && gender.touched">
+        Gender is required.
+      </div>
+    </div>
+
+    <div>
+      <label>Full Name:</label>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.name" />
+    </div>
+    <div>
+      <label>Passport:</label>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.passport" />
+    </div>
+    
+    <div>
+      <label>Country <span class="text-red-600">*</span></label>
+      <input type="text" [(ngModel)]="student.country" name="country" required #country="ngModel"
+        class="w-full border px-2 py-1" />
+      <div class="text-red-600 text-sm" *ngIf="country.invalid && country.touched">
+        Country is required.
+      </div>
+    </div>
+
+    <div>
+      <label>Date of Birth <span class="text-red-600">*</span></label>
+      <input type="date" [(ngModel)]="student.dateOfBirth" name="dateOfBirth" required #dob="ngModel"
+        class="w-full border px-2 py-1" />
+      <div class="text-red-600 text-sm" *ngIf="dob.invalid && dob.touched">
+        Date of Birth is required.
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<div *ngIf="activeTab === 'education'">
-    <app-student-education></app-student-education>
+<!-- CONTACT INFO TAB -->
+<div *ngIf="activeTab === 'contact'" class="p-4 border rounded-md bg-white space-y-4">
+
+  <h3 class="font-bold">Permanent/Home Address</h3>
+  
+  <div>
+    <label>Street Number <span class="text-red-600">*</span></label>
+    <input type="text" [(ngModel)]="student.permanent_streetNumber" name="permanent_streetNumber" required #streetNumber="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="streetNumber.invalid && streetNumber.touched">
+      Street Number is required.
+    </div>
+  </div>
+  
+  <div>
+    <label>Street Name <span class="text-red-600">*</span></label>
+    <input type="text" [(ngModel)]="student.permanent_streetName" name="permanent_streetName" required #streetName="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="streetName.invalid && streetName.touched">
+      Street Name is required.
+    </div>
+  </div>
+
+
+  <div>
+    <label>Suburb:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.permanent_suburb" />
+  </div>
+
+  <div>
+    <label>City <span class="text-red-600">*</span></label>
+    <input type="text" [(ngModel)]="student.permanent_city" name="permanent_city" required #city="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="city.invalid && city.touched">
+      City is required.
+    </div>
+  </div>
+
+  <div>
+    <label>Country:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.permanent_country" />
+  </div>
+  <div>
+    <label>Postcode:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.permanent_postcode" />
+  </div>
+  <div>
+    <label>Phone:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.permanent_phone" />
+  </div>
+
+  <h3 class="font-bold mt-4">Address while Studying</h3>
+  <div>
+    <label>Street Number:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_streetNumber" />
+  </div>
+  <div>
+    <label>Street Name:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_streetName" />
+  </div>
+  <div>
+    <label>Suburb:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_suburb" />
+  </div>
+  <div>
+    <label>City:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_city" />
+  </div>
+  <div>
+    <label>Country:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_country" />
+  </div>
+  <div>
+    <label>Postcode:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_postcode" />
+  </div>
+  <div>
+    <label>Phone:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.study_phone" />
+  </div>
+
+  <h3 class="font-bold mt-4">Contact Email</h3>
+  <div>
+    <label>Contact Email <span class="text-red-600">*</span></label>
+    <input type="email" [(ngModel)]="student.contact_Email" name="contact_Email" required #email="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="email.invalid && email.touched">
+      Contact Email is required.
+    </div>
+  </div>
+
+  <div>
+    <label>Confirm Email <span class="text-red-600">*</span></label>
+    <input type="email" [(ngModel)]="student.confirm_Email" name="confirm_Email" required #confirmemail="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="confirmemail.invalid && confirmemail.touched">
+      Confirm Email is required.
+    </div>
+  </div>
+
+  <h3 class="font-bold mt-4">Emergency Contact</h3>
+  <div>
+    <label>Emergency Contact Name <span class="text-red-600">*</span></label>
+    <input type="text" [(ngModel)]="student.emergencyContact_Name" name="emergencyContact_Name" required #emergencyName="ngModel"
+      class="w-full border px-2 py-1" />
+    <div class="text-red-600 text-sm" *ngIf="emergencyName.invalid && emergencyName.touched">
+      Emergency Contact Name is required.
+    </div>
+  </div>
+
+
+  <div>
+    <label>Relationship:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.emergencyContact_Relationship" />
+  </div>
+
 </div>
+
+<!-- TERTIARY EDUCATION TAB -->
+<div *ngIf="activeTab === 'education'" class="p-4 border rounded-md bg-white">
+  <app-student-education 
+      [records]="student.tertiaryRecords"
+      (educationAdded)="addEducation()"
+      (educationRemoved)="removeEducation($event)">
+  </app-student-education>
+</div>
+
+<!-- Save Button -->
+<button (click)="saveStudent()" [disabled]="isFormInvalid()" class="bg-blue-700 text-white px-4 py-2 rounded mt-4">
+  Save Student and Education Records
+</button>
 
