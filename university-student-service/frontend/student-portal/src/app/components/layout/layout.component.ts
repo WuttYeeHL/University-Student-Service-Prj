@@ -11,11 +11,7 @@ import { AuthService } from '../../services/guards/auth-guard.service';
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
-  user: User = {
-    name: 'Florence',
-    email: 'florence123@gmail.com',
-    imageUrl: 'profilepic.png',
-  };
+  user!: User;
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
@@ -57,6 +53,20 @@ export class LayoutComponent {
   }
 
   constructor(private authService: AuthService) {}
+
+  async ngOnInit(): Promise<void> {
+    const user = this.authService.currentUser;
+
+    if (user?.userId) {
+      this.user = {
+        name: user.username,
+        email: user.email,
+        imageUrl: 'profilepic.png',
+      };
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 
   onLogout() {
     this.authService.logout().subscribe({
