@@ -1,9 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Source\\Repos\\university-student-service\\backend\\",
+  "WorkspaceRootPath": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Source\\Repos\\university-student-service\\frontend\\student-portal\\angular.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|c:\\kll\\aut\\semester2\\cloud computing\\university-student-service-prj\\university-student-service\\backend\\studentservice\\data\\studentservice.data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|solutionrelative:studentservice\\data\\studentservice.data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|c:\\kll\\aut\\semester2\\cloud computing\\university-student-service-prj\\university-student-service\\backend\\studentservice\\controller\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8DEF2DD-B774-4436-9019-29889CFA7300}|StudentService\\StudentService.csproj|solutionrelative:studentservice\\controller\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,14 +39,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "angular.json",
-              "DocumentMoniker": "D:\\Source\\Repos\\university-student-service\\frontend\\student-portal\\angular.json",
-              "RelativeDocumentMoniker": "..\\frontend\\student-portal\\angular.json",
-              "ToolTip": "D:\\Source\\Repos\\university-student-service\\frontend\\student-portal\\angular.json",
-              "RelativeToolTip": "..\\frontend\\student-portal\\angular.json",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-01T23:50:46.281Z",
+              "Title": "StudentService.Data.cs",
+              "DocumentMoniker": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Data\\StudentService.Data.cs",
+              "RelativeDocumentMoniker": "StudentService\\Data\\StudentService.Data.cs",
+              "ToolTip": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Data\\StudentService.Data.cs",
+              "RelativeToolTip": "StudentService\\Data\\StudentService.Data.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAADwv34AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-09T08:24:46.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Controller\\StudentController.cs",
+              "RelativeDocumentMoniker": "StudentService\\Controller\\StudentController.cs",
+              "ToolTip": "C:\\KLL\\AUT\\Semester2\\Cloud Computing\\University-Student-Service-Prj\\university-student-service\\backend\\StudentService\\Controller\\StudentController.cs",
+              "RelativeToolTip": "StudentService\\Controller\\StudentController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-09T08:23:56.458Z",
               "EditorCaption": ""
             }
           ]
