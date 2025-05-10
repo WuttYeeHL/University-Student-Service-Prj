@@ -1,135 +1,65 @@
-<h3 class="text-lg font-semibold mb-4">Tertiary Education</h3>
-
-<!-- Form -->
-<div class="grid grid-cols-2 gap-4 mb-4">
-
-  <!-- Year From -->
-  <div class="relative z-0 w-full group">
-    <input type="text" name="yearFrom" [(ngModel)]="newRecord.yearFrom"
-    class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-    placeholder=" " />
-    <label 
-        class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-      Year From
-    </label>
+<div class="p-2 rounded-md bg-white space-y-1">
+  <h3 class="font-bold">Education</h3>
+  <div>
+    <label>Year From:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.yearFrom" />
   </div>
-
-  <!-- Year To -->
-  <div class="relative z-0 w-full group">
-    <input type="text" name="yearTo" [(ngModel)]="newRecord.yearTo"
-    class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-    placeholder=" " />
-           <label 
-           class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-             peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-      Year To
-    </label>
+  <div>
+    <label>Year To:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.yearTo" />
   </div>
-
-  <!-- Institution -->
-  <div class="relative z-0 w-full group col-span-2">
-    <input type="text" name="institution" [(ngModel)]="newRecord.institution"
-    class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-    placeholder=" " />
-           <label 
-           class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-             peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-      Name of Institution
-    </label>
+  <div>
+    <label>Institution:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.institution" />
   </div>
-
-  <!-- Qualification -->
-  <div class="relative z-0 w-full group col-span-2">
-    <input type="text" name="qualification" [(ngModel)]="newRecord.qualification"
-    class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-    placeholder=" " />
-           <label 
-           class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-             peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-      Qualification Gained or Attempted
-    </label>
+  <div>
+    <label>Qualification:</label>
+    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.qualification" />
   </div>
-
-  <!-- Location -->
-  <div class="relative z-0 w-full group col-span-2">
-    <select [(ngModel)]="newRecord.location"
-            class="block py-2.5 px-0 w-full border-0 border-b-2 border-gray-300 focus:border-blue-600 peer">
+  <div>
+    <label>Location:</label>
+    <select [(ngModel)]="newRecord.location" class="border p-2 w-full col-span-2">
       <option>NEW ZEALAND</option>
       <option>Overseas</option>
     </select>
-    <label 
-        class="absolute text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
-        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-          peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-green-600">
-      Location
-    </label>
+  </div>
+  <div>
+
+  <div class="flex items-center col-span-2 space-x-4">
+    <label><input type="checkbox" [(ngModel)]="newRecord.completed" /> Completed</label>
+    <label><input type="checkbox" [(ngModel)]="newRecord.awaiting" /> Awaiting Results</label>
   </div>
 
-  <!-- Completed Checkbox -->
-  <div class="flex items-center space-x-2">
-    <input type="checkbox" [(ngModel)]="newRecord.completed" id="completed">
-    <label for="completed">Successfully Completed</label>
-  </div>
-
-  <!-- Awaiting Checkbox -->
-  <div class="flex items-center space-x-2">
-    <input type="checkbox" [(ngModel)]="newRecord.awaiting" id="awaiting">
-    <label for="awaiting">Awaiting Results</label>
-  </div>
-
-  <!-- Add button -->
-  <div class="col-span-2 flex justify-right">
-    <button (click)="addRecord()" 
-            class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded shadow border border-blue-900">
-        Add To Tertiary Education List
-    </button>
-  </div>
-  
-
+  <button (click)="addRecord()" 
+          class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded shadow border border-blue-900 col-span-2">
+    Add To Tertiary Education List
+  </button>
 </div>
 
-<!-- Table -->
 <table class="w-full border-collapse border border-gray-400 mt-4">
-  <thead>
+  <thead class="bg-gray-100">
     <tr>
-      <th class="border border-gray-400 p-2">Years</th>
-      <th class="border border-gray-400 p-2">Institution</th>
-      <th class="border border-gray-400 p-2">Qualification</th>
-      <th class="border border-gray-400 p-2">Location</th>
-      <th class="border border-gray-400 p-2">Completed</th>
-      <th class="border border-gray-400 p-2">Awaiting</th>
-      <th class="border border-gray-400 p-2">Action</th>
+      <th class="border border-gray-400 px-2 py-1">Years</th>
+      <th class="border border-gray-400 px-2 py-1">Institution</th>
+      <th class="border border-gray-400 px-2 py-1">Qualification</th>
+      <th class="border border-gray-400 px-2 py-1">Location</th>
+      <th class="border border-gray-400 px-2 py-1">Completed</th>
+      <th class="border border-gray-400 px-2 py-1">Awaiting</th>
+      <th class="border border-gray-400 px-2 py-1">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let rec of records; let i = index">
-      <td class="border border-gray-400 p-2">{{rec.yearFrom}} - {{rec.yearTo}}</td>
-      <td class="border border-gray-400 p-2">{{rec.institution}}</td>
-      <td class="border border-gray-400 p-2">{{rec.qualification}}</td>
-      <td class="border border-gray-400 p-2">{{rec.location}}</td>
-      <td class="border border-gray-400 p-2">{{rec.completed ? 'Yes' : 'No'}}</td>
-      <td class="border border-gray-400 p-2">{{rec.awaiting ? 'Yes' : 'No'}}</td>
-      <td class="border border-gray-400 p-2">
-        <button (click)="removeRecord(i)" 
-                class="bg-red-600 text-white px-2 rounded">
-          Remove
-        </button>
-      </td>
-    </tr>
-    <tr *ngIf="records.length === 0">
-      <td colspan="7" class="text-center text-gray-500 p-2">
-        No records yet. Please add education details.
+      <td class="border border-gray-400 px-2 py-1">{{ rec.yearFrom }} - {{ rec.yearTo }}</td>
+      <td class="border border-gray-400 px-2 py-1">{{ rec.institution }}</td>
+      <td class="border border-gray-400 px-2 py-1">{{ rec.qualification }}</td>
+      <td class="border border-gray-400 px-2 py-1">{{ rec.location }}</td>
+      <td class="border border-gray-400 px-2 py-1 text-center">{{ rec.completed ? 'Yes' : 'No' }}</td>
+      <td class="border border-gray-400 px-2 py-1 text-center">{{ rec.awaiting ? 'Yes' : 'No' }}</td>
+      <td class="border border-gray-400 px-2 py-1 text-center">
+        <button (click)="removeRecord(i)" class="bg-red-600 text-white px-2 rounded">Remove</button>
       </td>
     </tr>
   </tbody>
 </table>
 
-<button (click)="saveAllRecords()" 
-        class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded shadow border border-blue-900 mt-4">
-    Save Your Changes
-</button>
