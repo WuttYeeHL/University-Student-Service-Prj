@@ -15,6 +15,7 @@ export class EnrolmentService {
       `${ENROLMENT_API_URL}/getEnrolmentByUserId`,
       {
         params: { userId: userId },
+        withCredentials: true,
       }
     );
   }

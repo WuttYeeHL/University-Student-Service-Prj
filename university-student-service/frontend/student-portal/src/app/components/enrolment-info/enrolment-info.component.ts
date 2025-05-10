@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { Enrolment } from '../../model/interface/enrolment';
 import { ENROLMENT_TABLE_HEADERS } from '../../constant/Constant';
 import { EnrolmentService } from '../../services/enrolment.service';
+import { AuthService } from '../../services/guards/auth-guard.service';
 
 @Component({
   selector: 'app-enrolment-info',
@@ -14,14 +15,23 @@ import { EnrolmentService } from '../../services/enrolment.service';
 export class EnrolmentInfoComponent implements OnInit {
   tableHeaders = ENROLMENT_TABLE_HEADERS;
   enrolments: Enrolment[] = [];
+  router = inject(Router);
 
-  constructor(private enrolmentService: EnrolmentService) {}
+  constructor(
+    private enrolmentService: EnrolmentService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit(): void {
-    const userId = '1';
-    this.enrolmentService.getEnrolments(userId).subscribe({
-      next: (data) => (this.enrolments = data),
-      error: (err) => console.error('Failed to load enrolments', err),
-    });
+  async ngOnInit(): Promise<void> {
+    const user = this.authService.currentUser;
+
+    if (user?.userId) {
+      this.enrolmentService.getEnrolments(user.userId).subscribe({
+        next: (data) => (this.enrolments = data),
+        error: (err) => console.error('Failed to load enrolments', err),
+      });
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

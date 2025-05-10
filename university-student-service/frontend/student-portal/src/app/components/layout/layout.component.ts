@@ -59,9 +59,13 @@ export class LayoutComponent {
   constructor(private authService: AuthService) {}
 
   onLogout() {
-    // Clear user session or token
-    // sessionStorage.clear();
-    // this.router.navigateByUrl('/login');
-    this.authService.logout();
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigateByUrl('/login');
+      },
+      error: (err) => {
+        console.error('Logout failed', err);
+      },
+    });
   }
 }

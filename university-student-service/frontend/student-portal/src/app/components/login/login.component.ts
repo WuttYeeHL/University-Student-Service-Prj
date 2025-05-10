@@ -26,8 +26,7 @@ export class LoginComponent {
       return;
     }
     this.authService.login(this.loginObj).subscribe({
-      next: (res) => {
-        this.authService.setAuthToken(res.token);
+      next: () => {
         this.router.navigate(['/home']);
       },
       error: (err) => {

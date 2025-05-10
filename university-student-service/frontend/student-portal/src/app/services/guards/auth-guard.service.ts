@@ -1,49 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Login } from '../../model/interface/login';
 import { HttpClient } from '@angular/common/http';
 import { LOGIN_API_URL } from '../../constant/Constant';
+import { LoginUser } from '../../model/interface/loginUser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private router: Router, private http: HttpClient) {}
-  private _token: string | null = null;
+  private userSubject = new BehaviorSubject<LoginUser | null>(null);
+  user$ = this.userSubject.asObservable();
 
-  setAuthToken(token: string): void {
-    this._token = token;
-    sessionStorage.setItem('authToken', token);
+  fetchUserInfo(): Observable<LoginUser> {
+    return this.http
+      .get<LoginUser>(`${LOGIN_API_URL}/currentuser`, { withCredentials: true })
+      .pipe(tap((user) => this.userSubject.next(user)));
   }
 
-  getAuthToken(): string | null {
-    if (this._token) return this._token;
-
-    const token = sessionStorage.getItem('authToken');
-    if (token) {
-      this._token = token;
-      return token;
-    }
-    return null;
+  get currentUser(): LoginUser | null {
+    return this.userSubject.value;
   }
 
-  isTokenExpired(token: string): boolean {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const expiry = payload.exp * 1000;
-    return Date.now() > expiry;
+  login(credentials: Login): Observable<void> {
+    return this.http.post<void>(`${LOGIN_API_URL}/login`, credentials, {
+      withCredentials: true,
+    });
   }
 
-  login(credentials: Login): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(
-      `${LOGIN_API_URL}/login`,
-      credentials
-    );
-  }
-
-  logout(): void {
-    this._token = null;
-    sessionStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+  logout(): Observable<void> {
+    return this.http
+      .post<void>(`${LOGIN_API_URL}/logout`, {}, { withCredentials: true })
+      .pipe(tap(() => this.userSubject.next(null)));
   }
 }
