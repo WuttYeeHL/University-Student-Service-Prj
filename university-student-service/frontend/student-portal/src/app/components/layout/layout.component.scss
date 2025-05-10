@@ -141,3 +141,23 @@
   font-size: 14px;
   color: white;
 }
+
+.sidebar-bottom {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    color: #ffdddd;
+  }
+}

@@ -1,1 +1,26 @@
-<p>Login works</p>
+<div class="login-container">
+  <div class="image-section">
+    <img src="/login-illustration.png" alt="login image" />
+  </div>
+  <div class="form-section">
+    <form>
+      <input
+        type="text"
+        [(ngModel)]="loginObj.loginCode"
+        name="username"
+        placeholder="Login Code"
+      />
+      <input
+        type="password"
+        [(ngModel)]="loginObj.password"
+        name="password"
+        placeholder="Password"
+      />
+      <label class="remember">
+        <input type="checkbox" />
+        Remember me
+      </label>
+      <button type="submit" class="login-btn" (click)="onLogin()">LOGIN</button>
+    </form>
+  </div>
+</div>
