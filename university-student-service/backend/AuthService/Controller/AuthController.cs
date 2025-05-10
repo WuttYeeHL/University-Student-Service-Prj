@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthService.Controllers;
 
@@ -34,7 +36,36 @@ public class AuthController : ControllerBase
             return Unauthorized("Invalid credentials.");
 
         var token = _tokenService.CreateToken(user);
-        return Ok(new { token });
+        Response.Cookies.Append("AuthToken", token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = false,
+            SameSite = SameSiteMode.Lax,
+            Domain = "localhost",
+            Expires = DateTimeOffset.UtcNow.AddMinutes(15)
+        });
+
+        return Ok();
+    }
+
+    [Authorize]
+    [HttpGet("currentuser")]
+    public IActionResult GetCurrentUser()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+            return Unauthorized();
+        var loginCode = User.FindFirst("LoginCode")?.Value;
+
+        return Ok(new { userId, loginCode });
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("AuthToken");
+        return Ok(new { message = "Logged out" });
     }
 
     // It doesn't need in production
