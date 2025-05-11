@@ -8,11 +8,13 @@ using CourseService.Data;
 using Amazon.S3.Model;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CourseService.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CourseController : ControllerBase
     {
         private readonly CourseRepository _repository;
@@ -42,14 +44,6 @@ namespace CourseService.Controller
 
             return Ok(qualification);
         }
-
-        //[HttpGet("api/s3/sign")]
-        //public IActionResult GetPresignedUrl([FromQuery] string key)
-        //{
-        //    var signer = new S3Presigner();
-        //    string url = signer.GeneratePreSignedUrl(key);
-        //    return Ok(new { url });
-        //}
 
         [HttpGet("download")]
         public async Task<IActionResult> DownloadFromS3([FromQuery] string key)
