@@ -1,27 +1,79 @@
-.tab-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
-    color: #1d4ed8; // blue-700
-    font-weight: bold;
-    border-radius: 0;
-    border-bottom: 2px solid #1d4ed8;
-    margin-right: 0.5rem;
-    transition: background-color 0.3s, color 0.3s;
-  
-    &.active {
-      background-color: #1d4ed8; // blue
-      color: white;
-      border-bottom: none;
-    }
-  
-    &:hover:not(.active) {
-      background-color: #e0e7ff; // light blue hover
-    }
+/* Tabs */
+button {
+  &.active {
+    background-color: #1d4ed8; // blue-700
+    color: white;
   }
+}
 
-  .tab-button:hover:not(.active) {
-    background-color: #e0e7ff; // light blue
+.tab-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+
+  &.active {
+    border-bottom: 2px solid #2563eb;
+    color: #2563eb;
   }
-    
+}
+
+/* Form fields */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2563eb; /* blue border on focus */
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.save-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.reset-btn {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+/* Profile Image */
+.profile-img {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .flex-row {
+    flex-direction: column;
+  }
+}

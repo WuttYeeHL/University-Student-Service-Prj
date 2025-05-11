@@ -10,18 +10,16 @@
       <tbody>
         <tr *ngFor="let enrolment of enrolments">
           <td>{{ enrolment.period }}</td>
-          <td>{{ enrolment.classCode }}</td>
+          <td>{{ enrolment.courseCode }}</td>
           <td>
             <a [routerLink]="['/course-info']" class="course-link">
-              {{ enrolment.courseName }}
+              {{ enrolment.courseDescription }}
             </a>
           </td>
           <td>{{ enrolment.status }}</td>
-          <td>{{ enrolment.starts }}</td>
+          <td>{{ enrolment.startDate | date : "dd-MMM-yyyy" }}</td>
           <td>{{ enrolment.location }}</td>
           <td>{{ enrolment.level }}</td>
-          <td>{{ enrolment.stream }}</td>
-          <td>{{ enrolment.efts }}</td>
         </tr>
       </tbody>
     </table>

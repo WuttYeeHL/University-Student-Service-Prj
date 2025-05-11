@@ -1,1 +1,14 @@
 @use "tailwindcss";
+
+body,
+html {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #333;
+}

@@ -1,11 +1,10 @@
 export interface Enrolment {
   period: string;
-  classCode: string;
-  courseName: string;
+  courseCode: string;
+  courseDescription: string;
   status: string;
-  starts: string;
+  startDate: string;
   location: string;
   level: number;
-  stream: string;
-  efts: number;
+  qualification: string;
 }
