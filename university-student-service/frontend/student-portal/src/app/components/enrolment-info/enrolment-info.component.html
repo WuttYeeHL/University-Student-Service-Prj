@@ -12,7 +12,10 @@
           <td>{{ enrolment.period }}</td>
           <td>{{ enrolment.courseCode }}</td>
           <td>
-            <a [routerLink]="['/course-info']" class="course-link">
+            <a
+              [routerLink]="['/course', enrolment.qualificationId]"
+              class="course-link"
+            >
               {{ enrolment.courseDescription }}
             </a>
           </td>

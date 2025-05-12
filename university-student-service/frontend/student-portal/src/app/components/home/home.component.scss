@@ -43,48 +43,41 @@
 
 /* Calendar Styling */
 .calendar-widget {
-  margin-bottom: 1.5rem;
+  text-align: left;
+  margin: 1rem auto;
 }
 
-.calendar-widget .calendar-header {
-  font-size: 1rem;
-  font-weight: bold;
+.calendar-header {
+  font-weight: 600;
   color: #003459;
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
-.calendar-widget .calendar-row {
+.calendar-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
-.calendar-widget .calendar-day {
+.calendar-day,
+.calendar-date {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.calendar-day {
   font-weight: 600;
-  color: #4b5c6b;
-  width: 2rem;
-  text-align: center;
 }
 
-.calendar-widget .calendar-date {
-  color: #999;
-  width: 2rem;
-  text-align: center;
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 2rem;
-}
-
-.calendar-widget .calendar-date.today {
-  background-color: #003459;
+.calendar-date.today {
+  background-color: #1a5c8f;
   color: white;
   border-radius: 50%;
-  font-weight: bold;
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-  text-align: center;
-  display: inline-block;
 }
 
 /* Coming Up Section */
@@ -110,19 +103,20 @@
 
 .calendar-icon {
   font-size: 1.5rem;
-  color: #012a5b;
+  color: #1a5c8f;
   margin-top: 0.1rem;
 }
 
 .class-date {
-  font-weight: bold;
-  color: #012a5b;
+  font-weight: 600;
+  color: #1a5c8f;
   margin-bottom: 0.3rem;
 }
 
 .class-title {
+  font-size: 1rem;
   font-weight: 600;
-  color: #333;
+  color: #3a3a3a;
 }
 
 .class-time {
@@ -183,8 +177,8 @@
 
 /* NEXT Section */
 .next-class-section {
-  border-top: 1px solid #d2bce4;
-  border-bottom: 1px solid #d2bce4;
+  border-top: 1px solid #c4daeb;
+  border-bottom: 1px solid #c4daeb;
   padding: 1rem 0;
   margin: 1rem 0;
 }

@@ -8,28 +8,25 @@
       <div class="panel-inner">
         <h3 class="panel-title">MY SCHEDULE</h3>
 
-        <!-- Calendar Block -->
+        <!-- Calender -->
         <div class="calendar-widget">
-          <div class="calendar-header">JUNE 2025</div>
-
-          <div class="calendar-row">
-            <div class="calendar-day">M</div>
-            <div class="calendar-day">T</div>
-            <div class="calendar-day">W</div>
-            <div class="calendar-day">T</div>
-            <div class="calendar-day">F</div>
-            <div class="calendar-day">S</div>
-            <div class="calendar-day">S</div>
+          <div class="calendar-header">
+            {{ currentMonthName }} {{ currentYear }}
           </div>
 
-          <div class="calendar-row">
-            <div class="calendar-date">28</div>
-            <div class="calendar-date">29</div>
-            <div class="calendar-date">30</div>
-            <div class="calendar-date">1</div>
-            <div class="calendar-date">2</div>
-            <div class="calendar-date">3</div>
-            <div class="calendar-date today">4</div>
+          <div class="calendar-row day-labels">
+            <div *ngFor="let day of weekDays" class="calendar-day">
+              {{ day }}
+            </div>
+          </div>
+
+          <div class="calendar-row date-row">
+            <div
+              *ngFor="let date of visibleDates"
+              [ngClass]="{ 'calendar-date': true, today: isToday(date) }"
+            >
+              {{ date.getDate() }}
+            </div>
           </div>
         </div>
 
@@ -49,17 +46,23 @@
           <div class="coming-up-grid">
             <!-- Session 1 -->
             <div class="class-card">
-              <div class="calendar-icon">📅</div>
+              <div class="calendar-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">Statistical Programming</div>
+                <div class="class-title">
+                  Statistical Programming for Data Science
+                </div>
                 <div class="class-time">10:00 to 11:00 WZ203</div>
               </div>
             </div>
 
             <!-- Session 2 -->
             <div class="class-card">
-              <div class="calendar-icon">📅</div>
+              <div class="calendar-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
                 <div class="class-title">Data Mining and Machine Learning</div>
@@ -69,7 +72,9 @@
 
             <!-- Session 3 -->
             <div class="class-card">
-              <div class="calendar-icon">📅</div>
+              <div class="calendar-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
                 <div class="class-title">Deep Learning</div>
@@ -79,7 +84,9 @@
 
             <!-- Session 4 -->
             <div class="class-card">
-              <div class="calendar-icon">📅</div>
+              <div class="calendar-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
                 <div class="class-title">Cloud Computing</div>
@@ -107,10 +114,12 @@
             <div class="news-card-content">
               <h4 class="news-card-title">Student Group Fair</h4>
               <p class="news-card-text">
-                Discover student clubs and organisations and browse group
+                Discover student clubs and organisations, browse group
                 activities, meet members and find your community on campus.
               </p>
-              <div class="news-card-date">📅 Thu, July 10, 2025</div>
+              <div class="news-card-date">
+                <i class="fas fa-calendar-alt"></i> Thu, July 10, 2025
+              </div>
             </div>
           </div>
 
@@ -128,7 +137,9 @@
                 Kick off the semester by connecting with fellow students from
                 around the world.
               </p>
-              <div class="news-card-date">📅 Wed, July 16, 2025</div>
+              <div class="news-card-date">
+                <i class="fas fa-calendar-alt"></i> Wed, July 16, 2025
+              </div>
             </div>
           </div>
 
@@ -145,7 +156,9 @@
               <p class="news-card-text">
                 A celebration of dance, food and music from around the world.
               </p>
-              <div class="news-card-date">📅 Thu, July 24, 2025</div>
+              <div class="news-card-date">
+                <i class="fas fa-calendar-alt"></i> Thu, July 24, 2025
+              </div>
             </div>
           </div>
         </div>
