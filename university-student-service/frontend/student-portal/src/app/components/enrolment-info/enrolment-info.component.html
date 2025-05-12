@@ -1,5 +1,5 @@
 <div class="enrolment-container">
-  <h2>Master of Computer and Information Sciences</h2>
+  <h2>{{ qualification }}</h2>
   <div class="table-wrapper">
     <table>
       <thead>
@@ -12,7 +12,10 @@
           <td>{{ enrolment.period }}</td>
           <td>{{ enrolment.courseCode }}</td>
           <td>
-            <a [routerLink]="['/course-info']" class="course-link">
+            <a
+              [routerLink]="['/course', enrolment.qualificationId]"
+              class="course-link"
+            >
               {{ enrolment.courseDescription }}
             </a>
           </td>

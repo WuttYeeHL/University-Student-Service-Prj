@@ -16,6 +16,7 @@ export class EnrolmentInfoComponent implements OnInit {
   tableHeaders = ENROLMENT_TABLE_HEADERS;
   enrolments: Enrolment[] = [];
   router = inject(Router);
+  qualification: string = '';
 
   constructor(
     private enrolmentService: EnrolmentService,
@@ -27,7 +28,12 @@ export class EnrolmentInfoComponent implements OnInit {
 
     if (user?.userId) {
       this.enrolmentService.getEnrolments(user.userId).subscribe({
-        next: (data) => (this.enrolments = data),
+        next: (data) => {
+          this.enrolments = data;
+          if (this.enrolments.length > 1) {
+            this.qualification = this.enrolments[1].qualification;
+          }
+        },
         error: (err) => console.error('Failed to load enrolments', err),
       });
     } else {
