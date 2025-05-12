@@ -1,13 +1,7 @@
-﻿using System.Reflection.PortableExecutable;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using CourseService.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using CourseService.Data;
 using Amazon.S3.Model;
 using Amazon.S3;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CourseService.Controller
