@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CourseInfoService } from '../../services/course-info.service';
+import { AuthService } from '../../services/guards/auth-guard.service';
 import { firstValueFrom } from 'rxjs';
 import { iQualificationInfo } from '../../model/interface/courseinfo';
 import { COURSE_INFO_TABLE_HEADERS, COURSE_API_URL } from '../../constant/Constant';
@@ -17,44 +18,36 @@ import { CommonModule } from '@angular/common';
 export class CourseDetailComponent {
   tableHeaders = COURSE_INFO_TABLE_HEADERS;
   qualification?: iQualificationInfo;
-  downloadurl = `${COURSE_API_URL}/download?key=`;
+  downloadurl = `${COURSE_API_URL}/download?key=courseinfo-documents/`;
   
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private http: HttpClient,
+    private authService: AuthService,
     private courseInfoService: CourseInfoService
   ) {}
 
   ngOnInit(): void {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!isNaN(id)) {
-      this.courseInfoService.getQualificationById(id).subscribe((data: iQualificationInfo) => {
-        this.qualification = data;
-        }
-        , (error) => {
-          console.error('Error fetching qualification data:', error);
-        });
+    const user = this.authService.currentUser;
+
+    if (user?.userId) {
+      if (!isNaN(id)) {
+        this.courseInfoService.getQualificationById(id).subscribe((data: iQualificationInfo) => {
+          this.qualification = data;
+          }
+          , (error) => {
+            console.error('Error fetching qualification data:', error);
+          });
+      } else {
+        console.error('Invalid course ID:', id);
+      }
     } else {
-      console.error('Invalid course ID:', id);
+      this.router.navigate(['/login']);
     }
+
   }
 
-  // async downloadFile(s3LocName: string, outfileName: string): Promise<void> {
-  //   try {
-  //     const blob = await firstValueFrom(
-  //       this.http.get(`${COURSE_API_URL}/download?key=${encodeURIComponent(s3LocName)}`, {
-  //         responseType: 'blob'
-  //       })
-  //     );
-  
-  //     const link = document.createElement('a');
-  //     link.href = URL.createObjectURL(blob);
-  //     link.download = outfileName;
-  //     link.click();
-  //     URL.revokeObjectURL(link.href);
-  //   } catch (err) {
-  //     console.error('Download failed:', err);
-  //   }
-  // }
 } 

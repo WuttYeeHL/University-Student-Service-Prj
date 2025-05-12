@@ -1,18 +1,14 @@
-﻿using System.Reflection.PortableExecutable;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using CourseService.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using CourseService.Data;
 using Amazon.S3.Model;
 using Amazon.S3;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CourseService.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CourseController : ControllerBase
     {
         private readonly CourseRepository _repository;
@@ -43,14 +39,7 @@ namespace CourseService.Controller
             return Ok(qualification);
         }
 
-        //[HttpGet("api/s3/sign")]
-        //public IActionResult GetPresignedUrl([FromQuery] string key)
-        //{
-        //    var signer = new S3Presigner();
-        //    string url = signer.GeneratePreSignedUrl(key);
-        //    return Ok(new { url });
-        //}
-
+        
         [HttpGet("download")]
         public async Task<IActionResult> DownloadFromS3([FromQuery] string key)
         {
