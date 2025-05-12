@@ -24,6 +24,7 @@ public class StudentEnrolmentService : IStudentEnrolmentService
             select new EnrolmentDto
             {
                 Period = e.Period,
+                QualificationId = e.QualificationId,
                 CourseCode = c.Code,
                 CourseDescription = c.Description,
                 Status = e.Status,

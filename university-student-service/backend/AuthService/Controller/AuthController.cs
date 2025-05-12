@@ -56,8 +56,10 @@ public class AuthController : ControllerBase
         if (string.IsNullOrEmpty(userId))
             return Unauthorized();
         var loginCode = User.FindFirst("LoginCode")?.Value;
+        var username = User.FindFirst(ClaimTypes.Name)?.Value;
+        var email = User.FindFirst(ClaimTypes.Email)?.Value;
 
-        return Ok(new { userId, loginCode });
+        return Ok(new { userId, loginCode, username, email });
     }
 
     [Authorize]
