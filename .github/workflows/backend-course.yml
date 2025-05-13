@@ -52,13 +52,7 @@ jobs:
         $credential = New-Object System.Management.Automation.PSCredential("${{ secrets.EC2_USERNAME }}", $securePassword)
         $session = New-PSSession -ComputerName "${{ secrets.EC2_HOST }}" -Credential $credential -Port 5985 -Authentication Basic
         Invoke-Command -Session $session -ScriptBlock {
-          # Stop the Windows service via NSSM
-          try {
-            & "C:\nssm\nssm.exe" stop CourseService
-          } catch {
-            Write-Host "Service not running or already stopped."
-          }
-
+          
           # Kill the app
             Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*CourseService.dll*'} | ForEach-Object {
                 Stop-Process -Id $_.ProcessId -Force
