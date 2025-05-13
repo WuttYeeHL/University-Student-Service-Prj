@@ -1,0 +1,75 @@
+name: Backend - Auth Serive API
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/AuthService/**'
+
+jobs:
+  deploy-backend:
+    runs-on: windows-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore NuGet packages
+      run: dotnet restore university-student-service/backend/AuthService/AuthService.csproj
+      
+    # Step 3: Publish and Zip the .NET Application
+    - name: Publish and Zip Application
+      run: |
+        dotnet publish university-student-service/backend/AuthService/AuthService.csproj -c Release -o ./published
+          $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+          $zipName = "backendAuth_$timestamp.zip"
+        Compress-Archive -Path ./published/* -DestinationPath ./$zipName.zip
+
+    # Step 4: Upload the Zip File to S3
+    - name: Upload to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-southeast-2 # Adjust the region as needed
+      run: |
+        aws s3 cp ./backend.zip s3://uss-storage-bucket/published/$zipName.zip
+
+    # Step 5: Deploy to Windows Server 2019 EC2 via WinRM
+    - name: Deploy via WinRM
+      run: |
+        $ErrorActionPreference = "Stop"
+        Set-Item -Path WSMan:\localhost\Client\AllowUnencrypted -Value $true
+        # Add EC2 host to TrustedHosts
+        Set-Item WSMan:\localhost\Client\TrustedHosts -Value "${{ secrets.EC2_HOST }}" -Force
+        $securePassword = ConvertTo-SecureString "${{ secrets.EC2_PASSWORD }}" -AsPlainText -Force
+        $credential = New-Object System.Management.Automation.PSCredential("${{ secrets.EC2_USERNAME }}", $securePassword)
+        $session = New-PSSession -ComputerName "${{ secrets.EC2_HOST }}" -Credential $credential -Port 5985 -Authentication Basic
+        Invoke-Command -Session $session -ScriptBlock {
+          # Stop the Windows service via NSSM
+          & "C:\nssm\nssm.exe" stop AuthService
+
+          # Kill the app
+          Get-Process -Name "dotnet" -ErrorAction SilentlyContinue | Stop-Process -Force
+          
+          # Clean up existing files
+          Remove-Item -Recurse -Force C:\test\app\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\temp\$zipName.zip -ErrorAction SilentlyContinue
+
+          # Download the backend.zip from S3
+          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/$zipName.zip" -OutFile "C:\temp\$zipName.zip"
+          # Extract the zip file
+          Expand-Archive -Path "C:\temp\$zipName.zip" -DestinationPath "C:\test\appAuth" -Force
+          
+          # Start the application
+          Start-Process "dotnet" -ArgumentList "CourseService.dll --urls http://0.0.0.0:4999" -WorkingDirectory "C:\test\appAuth\" -WindowStyle Hidden
+        }
+        Remove-PSSession -Session $session
