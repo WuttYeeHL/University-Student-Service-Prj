@@ -31,8 +31,8 @@ jobs:
       run: |
         dotnet publish university-student-service/backend/AuthService/AuthService.csproj -c Release -o ./published
           $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-          $zipName = "backendAuth_$timestamp.zip"
-        Compress-Archive -Path ./published/* -DestinationPath ./$zipName.zip
+          $env:ZIP_NAME = "backendAuth_$timestamp.zip"
+        Compress-Archive -Path ./published/* -DestinationPath ./$env:ZIP_NAME
 
     # Step 4: Upload the Zip File to S3
     - name: Upload to S3
@@ -41,7 +41,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ap-southeast-2 # Adjust the region as needed
       run: |
-        aws s3 cp ./$zipName.zip s3://uss-storage-bucket/published/$zipName.zip
+        aws s3 cp ./$env:ZIP_NAME s3://uss-storage-bucket/published/$env:ZIP_NAME
 
     # Step 5: Deploy to Windows Server 2019 EC2 via WinRM
     - name: Deploy via WinRM
@@ -62,12 +62,12 @@ jobs:
           
           # Clean up existing files
           Remove-Item -Recurse -Force C:\test\app\* -ErrorAction SilentlyContinue
-          Remove-Item -Recurse -Force C:\temp\$zipName.zip -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\temp\$env:ZIP_NAME -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
-          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/$zipName.zip" -OutFile "C:\temp\$zipName.zip"
+          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/$env:ZIP_NAME" -OutFile "C:\temp\$env:ZIP_NAME"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\$zipName.zip" -DestinationPath "C:\test\appAuth" -Force
+          Expand-Archive -Path "C:\temp\$env:ZIP_NAME" -DestinationPath "C:\test\appAuth" -Force
           
           # Start the application
           Start-Process "dotnet" -ArgumentList "CourseService.dll --urls http://0.0.0.0:4999" -WorkingDirectory "C:\test\appAuth\" -WindowStyle Hidden
