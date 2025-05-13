@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/CourseService/**'
+      - 'university-student-service/backend/CourseService/**'
 
 jobs:
   deploy-backend:
@@ -73,6 +73,9 @@ jobs:
           Expand-Archive -Path "C:\temp\backend.zip" -DestinationPath "C:\test\appCourse" -Force
           
           # Start the application
-          Start-Process "dotnet" -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" -WorkingDirectory "C:\test\appCourse" -WindowStyle Hidden
-        }
+          Start-Process "dotnet" `
+            -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" `
+            -WorkingDirectory "C:\test\appCourse\" `
+            -RedirectStandardOutput "C:\logs\course_out.log" `
+            -RedirectStandardError "C:\logs\course_err.log"         }
         Remove-PSSession -Session $session
