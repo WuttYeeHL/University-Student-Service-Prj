@@ -10,7 +10,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var secretName = "Dev/AuthService/Jwt";
+var secretName = "Prod/AuthService/Jwt";
 var region = Amazon.RegionEndpoint.APSoutheast2;
 
 var secretsClient = new AmazonSecretsManagerClient(region);
@@ -34,7 +34,7 @@ builder.Services.AddScoped<PasswordService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularApp",
+    options.AddPolicy("AllowAngular",
         policy => policy
             .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
@@ -88,7 +88,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Enable CORS here
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowAngular");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

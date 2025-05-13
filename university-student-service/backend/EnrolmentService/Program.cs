@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 });
 
 // Load secrets from AWS
-var secretName = "Dev/AuthService/Jwt";
+var secretName = "Prod/AuthService/Jwt";
 var region = Amazon.RegionEndpoint.APSoutheast2;
 
 var secretsClient = new AmazonSecretsManagerClient(region);

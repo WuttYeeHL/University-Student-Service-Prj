@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto model)
+    public async Task<IActionResult> Login(LoginDto model, [FromQuery] bool includeToken = false)
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.LoginCode == model.LoginCode);
 
@@ -39,11 +39,13 @@ public class AuthController : ControllerBase
         Response.Cookies.Append("AuthToken", token, new CookieOptions
         {
             HttpOnly = true,
-            Secure = false,
+            Secure = true,
             SameSite = SameSiteMode.Lax,
-            Domain = "localhost",
             Expires = DateTimeOffset.UtcNow.AddMinutes(15)
         });
+
+        if (includeToken)
+            return Ok(new { token });
 
         return Ok();
     }
