@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/AuthService/**'
+      - 'university-student-service/backend/AuthService/**'
 
 jobs:
   deploy-backend:
@@ -75,6 +75,10 @@ jobs:
           Expand-Archive -Path "C:\temp\backendAuth.zip" -DestinationPath "C:\test\appAuth" -Force
           
           # Start the application
-          Start-Process "dotnet" -ArgumentList "AuthService.dll --urls http://0.0.0.0:4999" -WorkingDirectory "C:\test\appAuth\" -WindowStyle Hidden
+          Start-Process "dotnet" `
+            -ArgumentList "AuthService.dll --urls http://0.0.0.0:4999" `
+            -WorkingDirectory "C:\test\appAuth\" `
+            -RedirectStandardOutput "C:\logs\auth_out.log" `
+            -RedirectStandardError "C:\logs\auth_err.log" 
         }
         Remove-PSSession -Session $session
