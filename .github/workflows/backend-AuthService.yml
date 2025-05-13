@@ -54,11 +54,17 @@ jobs:
         $session = New-PSSession -ComputerName "${{ secrets.EC2_HOST }}" -Credential $credential -Port 5985 -Authentication Basic
         Invoke-Command -Session $session -ScriptBlock {
           # Stop the Windows service via NSSM
-          & "C:\nssm\nssm.exe" stop AuthService
+          try {
+            & "C:\nssm\nssm.exe" stop CourseService
+          } catch {
+            Write-Host "Service not running or already stopped."
+          }
 
           # Kill the app
-          Get-Process -Name "dotnet" -ErrorAction SilentlyContinue | Stop-Process -Force
-          
+            Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*AuthService.dll*'} | ForEach-Object {
+                Stop-Process -Id $_.ProcessId -Force
+            }
+            
           # Clean up existing files
           Remove-Item -Recurse -Force C:\test\appAuth\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backendAuth.zip -ErrorAction SilentlyContinue
