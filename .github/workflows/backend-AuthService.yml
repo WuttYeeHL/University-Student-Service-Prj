@@ -41,7 +41,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ap-southeast-2 # Adjust the region as needed
       run: |
-        aws s3 cp ./backend.zip s3://uss-storage-bucket/published/$zipName.zip
+        aws s3 cp ./$zipName.zip s3://uss-storage-bucket/published/$zipName.zip
 
     # Step 5: Deploy to Windows Server 2019 EC2 via WinRM
     - name: Deploy via WinRM
