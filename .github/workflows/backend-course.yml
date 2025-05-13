@@ -53,7 +53,11 @@ jobs:
         $session = New-PSSession -ComputerName "${{ secrets.EC2_HOST }}" -Credential $credential -Port 5985 -Authentication Basic
         Invoke-Command -Session $session -ScriptBlock {
           # Stop the Windows service via NSSM
-          & "C:\nssm\nssm.exe" stop CourseService
+          try {
+            & "C:\nssm\nssm.exe" stop CourseService
+          } catch {
+            Write-Host "Service not running or already stopped."
+          }
 
           # Kill the app
           Get-Process -Name "dotnet" -ErrorAction SilentlyContinue | Stop-Process -Force
