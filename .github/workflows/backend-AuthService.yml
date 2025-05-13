@@ -60,7 +60,7 @@ jobs:
           Get-Process -Name "dotnet" -ErrorAction SilentlyContinue | Stop-Process -Force
           
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\app\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\test\appAuth\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backendAuth.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
