@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/AuthService/**'
+      - 'university-student-service/backend/AuthService/**'
 
 jobs:
   deploy-backend:
