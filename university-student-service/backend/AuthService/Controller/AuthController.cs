@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
         Response.Cookies.Append("AuthToken", token, new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
+            Secure = false,
             SameSite = SameSiteMode.Lax,
             Expires = DateTimeOffset.UtcNow.AddMinutes(15)
         });
