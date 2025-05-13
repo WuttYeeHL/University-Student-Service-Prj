@@ -60,18 +60,19 @@ jobs:
           }
 
           # Kill the app
-          Get-Process -Name "dotnet" -ErrorAction SilentlyContinue | Stop-Process -Force
-          
+            Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*CourseService.dll*'} | ForEach-Object {
+                Stop-Process -Id $_.ProcessId -Force
+            }
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\app\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\test\appCourse\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backend.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
           Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backend.zip" -OutFile "C:\temp\backend.zip"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\backend.zip" -DestinationPath "C:\test\app" -Force
+          Expand-Archive -Path "C:\temp\backend.zip" -DestinationPath "C:\test\appCourse" -Force
           
           # Start the application
-          Start-Process "dotnet" -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" -WorkingDirectory "C:\test\app" -WindowStyle Hidden
+          Start-Process "dotnet" -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" -WorkingDirectory "C:\test\appCourse" -WindowStyle Hidden
         }
         Remove-PSSession -Session $session
