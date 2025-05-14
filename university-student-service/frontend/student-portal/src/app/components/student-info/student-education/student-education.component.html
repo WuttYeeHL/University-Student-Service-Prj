@@ -1,41 +1,73 @@
-<div class="p-2 rounded-md bg-white space-y-1">
+<form #eduForm="ngForm" class="p-2 rounded-md bg-white space-y-1">
   <h3 class="font-bold">Education</h3>
+
+  <!-- Year From -->
   <div>
-    <label>Year From:</label>
-    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.yearFrom" />
-  </div>
-  <div>
-    <label>Year To:</label>
-    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.yearTo" />
-  </div>
-  <div>
-    <label>Institution:</label>
-    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.institution" />
-  </div>
-  <div>
-    <label>Qualification:</label>
-    <input type="text" class="w-full border px-2 py-1" [(ngModel)]="newRecord.qualification" />
-  </div>
-  <div>
-    <label>Location:</label>
-    <select [(ngModel)]="newRecord.location" class="border p-2 w-full col-span-2">
-      <option>NEW ZEALAND</option>
-      <option>Overseas</option>
+    <label>Year From</label>
+    <select [(ngModel)]="newRecord.yearFrom" name="yearFrom" required #yearFrom="ngModel"
+            class="border p-2 w-full col-span-2">
+      <option value="" disabled selected>Select Year</option>
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
     </select>
+    <div *ngIf="yearFrom.invalid && yearFrom.touched" class="text-red-600 text-sm">Year From is required.</div>
   </div>
+
+  <!-- Year To -->
   <div>
-
-  <div class="flex items-center col-span-2 space-x-4">
-    <label><input type="checkbox" [(ngModel)]="newRecord.completed" /> Completed</label>
-    <label><input type="checkbox" [(ngModel)]="newRecord.awaiting" /> Awaiting Results</label>
+    <label>Year To</label>
+    <select [(ngModel)]="newRecord.yearTo" name="yearTo" required #yearTo="ngModel"
+            class="border p-2 w-full col-span-2">
+      <option value="" disabled selected>Select Year</option>
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+    <div *ngIf="yearTo.invalid && yearTo.touched" class="text-red-600 text-sm">Year To is required.</div>
+    <div *ngIf="yearRangeError" class="text-red-600 text-sm">Year To must be greater than or equal to Year From.</div>
   </div>
 
-  <button (click)="addRecord()" 
+  <!-- Institution -->
+  <div>
+    <label>Institution</label>
+    <input type="text" [(ngModel)]="newRecord.institution" name="institution" required #institution="ngModel"
+           class="w-full border px-2 py-1" />
+    <div *ngIf="institution.invalid && institution.touched" class="text-red-600 text-sm">Institution is required.</div>
+  </div>
+
+  <!-- Qualification -->
+  <div>
+    <label>Qualification</label>
+    <input type="text" [(ngModel)]="newRecord.qualification" name="qualification" required #qualification="ngModel"
+           class="w-full border px-2 py-1" />
+    <div *ngIf="qualification.invalid && qualification.touched" class="text-red-600 text-sm">Qualification is required.</div>
+  </div>
+
+  <!-- Location -->
+  <div>
+    <label>Location</label>
+    <select [(ngModel)]="newRecord.location" name="location" required #location="ngModel"
+            class="border p-2 w-full col-span-2">
+      <option value="NEW ZEALAND">NEW ZEALAND</option>
+      <option value="Overseas">Overseas</option>
+    </select>
+    <div *ngIf="location.invalid && location.touched" class="text-red-600 text-sm">Location is required.</div>
+  </div>
+
+  <!-- Checkboxes -->
+  <div class="flex items-center col-span-2 space-x-4">
+    <label><input type="checkbox" [(ngModel)]="newRecord.completed" name="completed" /> Completed</label>
+    <label><input type="checkbox" [(ngModel)]="newRecord.awaiting" name="awaiting" /> Awaiting Results</label>
+  </div>
+<div *ngIf="checkboxError" class="text-red-600 text-sm">
+  Please check either Completed or Awaiting Results.
+</div>
+
+  <!-- Add Button -->
+  <button (click)="addRecord(eduForm)"
           class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded shadow border border-blue-900 col-span-2">
     Add To Tertiary Education List
   </button>
-</div>
+</form>
 
+<!-- Display Records -->
 <table class="w-full border-collapse border border-gray-400 mt-4">
   <thead class="bg-gray-100">
     <tr>
@@ -62,4 +94,3 @@
     </tr>
   </tbody>
 </table>
-

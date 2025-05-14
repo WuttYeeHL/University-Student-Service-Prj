@@ -12,45 +12,48 @@ namespace StudentService.Data
     {
         Student GetByUserId(int userId);
         void Update(Student student);
-        Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId);
+        Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId, IAmazonS3 s3Client, string bucketName);
     }
     public class StudentRepository : IStudentRepository
     {
         private readonly string _connectionString;
 
         private readonly IAmazonS3 _s3Client;
-        private readonly string _bucketName = "kllprofileimgbucket";
+        private readonly string _bucketName = "uss-storage-bucket";
 
         public StudentRepository(IConfiguration configuration, IAmazonS3 s3Client)
         {
             _s3Client = s3Client;
             _bucketName = configuration["AWS:BucketName"];
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-        }        
-
-        public async Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId)
-        {
-            //if (file == null || file.Length == 0)
-            //    throw new ArgumentException("Invalid file");
-
-            var fileExtension = Path.GetExtension(model.File.FileName);
-            var key = $"profiles/{studentId}{fileExtension}";
-
-            using (var stream = model.File.OpenReadStream())
-            {
-                var uploadRequest = new TransferUtilityUploadRequest
-                {
-                    InputStream = stream,
-                    Key = key,
-                    BucketName = _bucketName,
-                    ContentType = model.File.ContentType
-                };
-
-                var transferUtility = new TransferUtility(_s3Client);
-                await transferUtility.UploadAsync(uploadRequest);
-            }
-            return $"{studentId}{fileExtension}";
         }
+        
+        public async Task<string> UploadProfileImageAsync([FromForm] UploadFileModel model, string studentId, IAmazonS3 s3Client,  string bucketName)
+            {
+                if (model.File == null || model.File.Length == 0)
+                    throw new ArgumentException("No file uploaded.");
+
+                var fileExtension = Path.GetExtension(model.File.FileName);
+                var key = $"profiles/{studentId}{fileExtension}";
+
+                using (var stream = model.File.OpenReadStream())
+                {
+                    var uploadRequest = new TransferUtilityUploadRequest
+                    {
+                        InputStream = stream,
+                        Key = key,
+                        BucketName = bucketName, // ✅ using passed parameter
+                        ContentType = model.File.ContentType
+                        //CannedACL = S3CannedACL.PublicRead // Optional: make it publicly accessible
+                    };
+
+                    var transferUtility = new TransferUtility(s3Client); // ✅ using passed parameter
+                    await transferUtility.UploadAsync(uploadRequest);
+                }
+
+                // Return full URL to the uploaded image
+                return $"https://{bucketName}.s3.amazonaws.com/{key}";
+            }
 
         public Student GetByUserId(int userId)
         {

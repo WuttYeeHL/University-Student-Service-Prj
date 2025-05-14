@@ -5,6 +5,7 @@ import { Student } from '../../model/interface/student';
 import { Education } from '../../model/interface/education';
 import { StudentService } from '../../services/student.service';
 import { StudentEducationComponent } from "./student-education/student-education.component";
+import { AuthService } from '../../services/guards/auth-guard.service';
 
 @Component({
   selector: 'app-student-info',
@@ -25,15 +26,18 @@ export class StudentInfoComponent implements OnInit {
   activeTab: string = 'personal';
   defaultProfileImage = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';  // or any placeholder image
 
-  constructor(private studentService: StudentService) {}
+  constructor(private studentService: StudentService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadStudent();
   }
-
+ 
   loadStudent(): void {
     const userId = 1; // You can change this if dynamic
-    this.studentService.getStudentByUserId(userId).subscribe({
+    const user = this.authService.currentUser;
+    const userId1 = user?.userId;
+    console.log(user?.userId)
+    this.studentService.getStudentByUserId(Number(user?.userId)).subscribe({
       next: (data: Student) => {
         this.student = data;  
         if (this.student.dateOfBirth) {
@@ -93,9 +97,8 @@ export class StudentInfoComponent implements OnInit {
   
   getProfileImageUrl(key: string): string {
     key = "profiles/" + key;
-    return `https://kllprofileimgbucket.s3.amazonaws.com/${key}`;
-  }
-  
+    return `https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/${key}`;
+  }  
 
   isFormInvalid(): boolean {
     return !this.student.preferred_First_Name || 
