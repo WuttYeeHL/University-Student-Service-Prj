@@ -7,6 +7,7 @@ namespace DocService.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DocController : ControllerBase
     {
         private readonly IDocumentService _documentService;
@@ -17,7 +18,6 @@ namespace DocService.Controller
         }
 
         [HttpPost("upload")]
-        [AllowAnonymous]
         public async Task<IActionResult> UploadDocument([FromForm] DocumentUploadModel model)
         {
             try
@@ -26,7 +26,14 @@ namespace DocService.Controller
                     return BadRequest("No file uploaded.");
 
                 var document = await _documentService.UploadDocumentAsync(model);
-                return Ok(new { DocumentId = document.Id, FileName = document.FileName, S3Url = document.S3Url });
+                var response = new
+                {
+                    DocumentId = document.Id,
+                    FileName = document.FileName,
+                    S3Url = document.S3Url,
+                    UploadedAt = document.UploadedAt.ToString("o") 
+                };
+                return Ok(response);
             }
             catch (Exception ex)
             {
