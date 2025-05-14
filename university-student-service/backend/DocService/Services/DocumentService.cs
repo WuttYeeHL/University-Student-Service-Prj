@@ -9,7 +9,7 @@ namespace DocService.Services
     {
         private readonly IDocumentRepository _documentRepository;
         private readonly IAmazonS3 _s3Client;
-        private readonly string _bucketName = "university-student-service-documents";
+        private readonly string _bucketName = "uss-storage-bucket";
 
         public DocumentService(IDocumentRepository documentRepository, IAmazonS3 s3Client)
         {
@@ -20,7 +20,7 @@ namespace DocService.Services
         public async Task<Document> UploadDocumentAsync(DocumentUploadModel model)
         {
             var fileName = $"{Guid.NewGuid()}_{model.File.FileName}";
-            var s3Key = $"documents/{model.StudentId}/{fileName}";
+            var s3Key = $"student-documents/{model.StudentId}/{fileName}";
 
             using (var stream = model.File.OpenReadStream())
             {
@@ -65,7 +65,8 @@ namespace DocService.Services
             if (document == null)
                 throw new Exception("Document not found.");
 
-            var s3Key = new Uri(document.S3Url).AbsolutePath.TrimStart('/');
+            var s3Key = Uri.UnescapeDataString(new Uri(document.S3Url).AbsolutePath.TrimStart('/'));
+
             var getRequest = new GetObjectRequest
             {
                 BucketName = _bucketName,
@@ -82,7 +83,7 @@ namespace DocService.Services
             if (document == null)
                 return false;
 
-            var s3Key = new Uri(document.S3Url).AbsolutePath.TrimStart('/');
+            var s3Key = Uri.UnescapeDataString(new Uri(document.S3Url).AbsolutePath.TrimStart('/'));
             var deleteRequest = new DeleteObjectRequest
             {
                 BucketName = _bucketName,
