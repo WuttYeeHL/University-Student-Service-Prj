@@ -36,7 +36,7 @@
   <div class="flex flex-col md:flex-row gap-6">
     <!-- Profile Image -->
     <div class="flex flex-col items-center">
-      <img [src]="getProfileImageUrl(student.profileImage)" class="rounded-full w-32 h-32" />
+      <img [src]="student.profileImage" class="rounded-full w-42 h-42" />
       <input type="file" (change)="onProfileImageSelected($event)" class="hidden" #fileInput />
       <button
         class="mt-2 bg-blue-700 text-white px-4 py-2 rounded"
@@ -49,8 +49,23 @@
     <!-- Personal Fields -->
     <div class="flex-1 space-y-4">
       <div>
-        <label>Title:</label>
-        <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.title" />
+        <label>Title <span class="text-red-600">*</span></label>
+          <select [(ngModel)]="student.title" name="title" required #location="ngModel"
+          class="w-full border px-2 py-1 text-white-900 bg-white rounded">
+            <option value="Mr.">Mr.</option>
+            <option value="Ms.">Ms.</option>
+            <option value="Mrs.">Mrs.</option>
+          </select>
+      </div>
+
+      <div>
+        <label>Gender <span class="text-red-600">*</span></label>
+          <select [(ngModel)]="student.gender" name="gender" required #location="ngModel"
+          class="w-full border px-2 py-1 text-white-900 bg-white rounded">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+          </select>
       </div>
 
       <div>
@@ -70,45 +85,28 @@
           Preferred Last Name is required.
         </div>
       </div>
-
     </div>
   </div>
 
   <div class="mt-6 space-y-4">
     <div>
-      <label>Gender <span class="text-red-600">*</span></label>
-      <input type="text" [(ngModel)]="student.gender" name="gender" required #gender="ngModel"
-        class="w-full border px-2 py-1" />
-      <div class="text-red-600 text-sm" *ngIf="gender.invalid && gender.touched">
-        Gender is required.
-      </div>
+      <label>Full Name </label>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.name" readonly/>
     </div>
 
     <div>
-      <label>Full Name:</label>
-      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.name" />
-    </div>
-    <div>
-      <label>Passport:</label>
-      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.passport" />
+      <label>Passport </label>
+      <input type="text" class="w-full border px-2 py-1" [(ngModel)]="student.passport" readonly/>
     </div>
     
     <div>
-      <label>Country <span class="text-red-600">*</span></label>
-      <input type="text" [(ngModel)]="student.country" name="country" required #country="ngModel"
-        class="w-full border px-2 py-1" />
-      <div class="text-red-600 text-sm" *ngIf="country.invalid && country.touched">
-        Country is required.
-      </div>
+      <label>Country <span class="text-red-600"></span></label>
+      <input type="text" [(ngModel)]="student.country" name="country" readonly />
     </div>
 
     <div>
-      <label>Date of Birth <span class="text-red-600">*</span></label>
-      <input type="date" [(ngModel)]="student.dateOfBirth" name="dateOfBirth" required #dob="ngModel"
-        class="w-full border px-2 py-1" />
-      <div class="text-red-600 text-sm" *ngIf="dob.invalid && dob.touched">
-        Date of Birth is required.
-      </div>
+      <label>Date of Birth <span class="text-red-600"></span></label>
+      <input type="date" [(ngModel)]="student.dateOfBirth" name="dateOfBirth" readonly/>
     </div>
 
   </div>

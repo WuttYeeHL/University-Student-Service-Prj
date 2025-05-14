@@ -14,16 +14,28 @@ export class StudentService {
 
   constructor(private http: HttpClient) {}
 
-  getStudentByUserId(userId: number): Observable<Student> {
+  /*getStudentByUserId(userId: number): Observable<Student> {
     return this.http.get<Student>(`${this.apiUrl}/Students/user/${userId}`)
+  }*/
+  getStudentByUserId(userId: number): Observable<Student> {
+    return this.http.get<Student>(
+      `${this.apiUrl}/Students/user/${userId}`,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   updateStudent(student: Student): Observable<any> {
-    return this.http.put(this.apiUrl + '/Students', student);
+    return this.http.put(this.apiUrl + '/Students', student,{
+        withCredentials: true
+      });
   }
 
   uploadProfileImage(formData: FormData): Observable<{ url: string }> {
-    return this.http.post<{ url: string }>(`${this.apiUrl}/Students/UploadProfileImage`, formData);
+    return this.http.post<{ url: string }>(`${this.apiUrl}/Students/UploadProfileImage`, formData,{
+        withCredentials: true
+      });
   }
   
 }
