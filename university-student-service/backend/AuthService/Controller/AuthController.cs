@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto model, [FromQuery] bool includeToken = false)
+    public async Task<IActionResult> Login(LoginDto model)
     {
         var user = await _db.Users.FirstOrDefaultAsync(u => u.LoginCode == model.LoginCode);
 
@@ -36,18 +36,7 @@ public class AuthController : ControllerBase
             return Unauthorized("Invalid credentials.");
 
         var token = _tokenService.CreateToken(user);
-        Response.Cookies.Append("AuthToken", token, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = false,
-            SameSite = SameSiteMode.None,
-            Expires = DateTimeOffset.UtcNow.AddMinutes(15)
-        });
-
-        if (includeToken)
-            return Ok(new { token });
-
-        return Ok();
+        return Ok(new { token });
     }
 
     [Authorize]
@@ -64,13 +53,6 @@ public class AuthController : ControllerBase
         return Ok(new { userId, loginCode, username, email });
     }
 
-    [Authorize]
-    [HttpPost("logout")]
-    public IActionResult Logout()
-    {
-        Response.Cookies.Delete("AuthToken");
-        return Ok(new { message = "Logged out" });
-    }
 
     // It doesn't need in production
     [HttpGet("getHashedPassword")]

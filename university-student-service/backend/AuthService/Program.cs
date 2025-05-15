@@ -38,8 +38,7 @@ builder.Services.AddCors(options =>
         policy => policy
             .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials());
+            .AllowAnyMethod());
 });
 
 // Read JWT config values from configuration
@@ -51,18 +50,6 @@ string audience = builder.Configuration["Jwt:Audience"] ?? throw new InvalidOper
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                var token = context.Request.Cookies["AuthToken"];
-                if (!string.IsNullOrEmpty(token))
-                {
-                    context.Token = token;
-                }
-                return Task.CompletedTask;
-            }
-        };
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
