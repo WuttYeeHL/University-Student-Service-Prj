@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 import { Login } from '../../model/interface/login';
 
 @Component({

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StudentDocService } from '../../services/student-documents-service';
 import { StudentDocs } from '../../model/interface/studentDocs';
-import { AuthService } from '../../services/guards/auth-guard.service'; 
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-student-documents',

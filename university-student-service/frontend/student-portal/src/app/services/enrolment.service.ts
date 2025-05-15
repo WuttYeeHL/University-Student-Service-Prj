@@ -11,12 +11,6 @@ export class EnrolmentService {
   constructor(private http: HttpClient) {}
 
   getEnrolments(userId: string): Observable<Enrolment[]> {
-    return this.http.get<Enrolment[]>(
-      `${ENROLMENT_API_URL}/getEnrolmentByUserId`,
-      {
-        params: { userId: userId },
-        withCredentials: true,
-      }
-    );
+    return this.http.get<Enrolment[]>(`${ENROLMENT_API_URL}/getEnrolments`);
   }
 }

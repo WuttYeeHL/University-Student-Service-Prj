@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { iCourseInfo, iQualificationInfo } from '../../model/interface/courseinfo';
 import { COURSE_INFO_TABLE_HEADERS, COURSE_API_URL } from '../../constant/Constant';
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 import { CourseInfoService } from '../../services/course-info.service';
 
 @Component({
