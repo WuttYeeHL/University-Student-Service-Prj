@@ -1,6 +1,7 @@
 <div class="enrolment-container">
   <h2>{{ qualification }}</h2>
-  <div class="table-wrapper">
+  <div *ngIf="isLoading" class="loading-message">Loading enrolments...</div>
+  <div *ngIf="!isLoading" class="table-wrapper">
     <table>
       <thead>
         <tr>

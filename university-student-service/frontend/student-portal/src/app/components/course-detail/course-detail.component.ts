@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CourseInfoService } from '../../services/course-info.service';
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 import { firstValueFrom } from 'rxjs';
 import { iQualificationInfo } from '../../model/interface/courseinfo';
 import { COURSE_INFO_TABLE_HEADERS, COURSE_API_URL } from '../../constant/Constant';

@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Enrolment } from '../../model/interface/enrolment';
 import { ENROLMENT_TABLE_HEADERS } from '../../constant/Constant';
 import { EnrolmentService } from '../../services/enrolment.service';
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-enrolment-info',
@@ -17,6 +17,7 @@ export class EnrolmentInfoComponent implements OnInit {
   enrolments: Enrolment[] = [];
   router = inject(Router);
   qualification: string = '';
+  isLoading = true;
 
   constructor(
     private enrolmentService: EnrolmentService,
@@ -33,8 +34,12 @@ export class EnrolmentInfoComponent implements OnInit {
           if (this.enrolments.length > 1) {
             this.qualification = this.enrolments[1].qualification;
           }
+          this.isLoading = false;
         },
-        error: (err) => console.error('Failed to load enrolments', err),
+        error: (err) => {
+          console.error('Failed to load enrolments', err);
+          this.isLoading = false;
+        },
       });
     } else {
       this.router.navigate(['/login']);

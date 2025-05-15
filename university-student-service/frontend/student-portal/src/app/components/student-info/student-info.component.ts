@@ -5,7 +5,7 @@ import { Student } from '../../model/interface/student';
 import { Education } from '../../model/interface/education';
 import { StudentService } from '../../services/student.service';
 import { StudentEducationComponent } from "./student-education/student-education.component";
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-student-info',
