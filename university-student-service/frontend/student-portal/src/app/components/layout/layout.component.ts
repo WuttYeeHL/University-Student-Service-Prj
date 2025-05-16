@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../model/interface/user';
-import { AuthService } from '../../services/guards/auth-guard.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -69,13 +69,6 @@ export class LayoutComponent {
   }
 
   onLogout() {
-    this.authService.logout().subscribe({
-      next: () => {
-        this.router.navigateByUrl('/login');
-      },
-      error: (err) => {
-        console.error('Logout failed', err);
-      },
-    });
+    this.authService.logout();
   }
 }

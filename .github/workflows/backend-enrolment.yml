@@ -1,0 +1,78 @@
+name: Backend - Enrolment Serive API
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'university-student-service/backend/EnrolmentService/**'
+
+jobs:
+  deploy-backend:
+    runs-on: windows-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore NuGet packages
+      run: dotnet restore university-student-service/backend/EnrolmentService/EnrolmentService.csproj
+      
+    # Step 3: Publish and Zip the .NET Application
+    - name: Publish and Zip Application
+      run: |
+        dotnet publish university-student-service/backend/EnrolmentService/EnrolmentService.csproj -c Release -o ./published
+          
+        Compress-Archive -Path ./published/* -DestinationPath ./backendEnrolment.zip
+
+    # Step 4: Upload the Zip File to S3
+    - name: Upload to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-southeast-2 # Adjust the region as needed
+      run: |
+        aws s3 cp ./backendEnrolment.zip s3://uss-storage-bucket/published/backendEnrolment.zip
+
+    # Step 5: Deploy to Windows Server 2019 EC2 via WinRM
+    - name: Deploy via WinRM
+      run: |
+        $ErrorActionPreference = "Stop"
+        Set-Item -Path WSMan:\localhost\Client\AllowUnencrypted -Value $true
+        # Add EC2 host to TrustedHosts
+        Set-Item WSMan:\localhost\Client\TrustedHosts -Value "${{ secrets.EC2_HOST }}" -Force
+        $securePassword = ConvertTo-SecureString "${{ secrets.EC2_PASSWORD }}" -AsPlainText -Force
+        $credential = New-Object System.Management.Automation.PSCredential("${{ secrets.EC2_USERNAME }}", $securePassword)
+        $session = New-PSSession -ComputerName "${{ secrets.EC2_HOST }}" -Credential $credential -Port 5985 -Authentication Basic
+        Invoke-Command -Session $session -ScriptBlock {
+          
+          # Kill the app
+            Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*EnrolmentService.dll*'} | ForEach-Object {
+                Stop-Process -Id $_.ProcessId -Force
+            }
+            
+          # Clean up existing files
+          Remove-Item -Recurse -Force C:\test\appEnrolment\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\temp\backendEnrolment.zip -ErrorAction SilentlyContinue
+
+          # Download the backend.zip from S3
+          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backendEnrolment.zip" -OutFile "C:\temp\backendEnrolment.zip"
+          # Extract the zip file
+          Expand-Archive -Path "C:\temp\backendEnrolment.zip" -DestinationPath "C:\test\appEnrolment" -Force
+          
+          # Start the application
+          Start-Process "dotnet" `
+            -ArgumentList "EnrolmentService.dll --urls http://0.0.0.0:5001" `
+            -WorkingDirectory "C:\test\appEnrolment\" `
+            -RedirectStandardOutput "C:\logs\enrolment_out.log" `
+            -RedirectStandardError "C:\logs\enrolment_err.log" 
+        }
+        Remove-PSSession -Session $session
