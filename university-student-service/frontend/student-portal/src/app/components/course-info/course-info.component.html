@@ -20,7 +20,7 @@
       <tbody>
         <tr *ngFor="let course of degree.courses">
           <td>
-            <a [href]="downloadurl + course.code + '.pdf'" download>
+            <a (click)="downloadCourseFile(course.code)" href="javascript:void(0)">
               {{ course.code }}
             </a> 
           </td>

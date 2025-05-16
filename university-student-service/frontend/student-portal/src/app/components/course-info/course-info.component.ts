@@ -19,6 +19,7 @@ export class CourseInfoComponent {
   expandedCourse: string | null = null;
    downloadurl = `${COURSE_API_URL}/download?key=courseinfo-documents/`;
   router = inject(Router);
+  link = '';
 
   toggle(code: string): void {
     this.expandedCourse = this.expandedCourse === code ? null : code;
@@ -39,5 +40,20 @@ export class CourseInfoComponent {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  downloadCourseFile(code: string): void {
+    this.link = `${this.downloadurl}${code}.pdf`;
+    this.courseInfoService.downloadCourseFile(this.link).subscribe(
+      (blob: Blob) => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = code;
+        link.click();
+      },
+      error => {
+        console.error('Download failed', error);
+      }
+    );
   }
 }
