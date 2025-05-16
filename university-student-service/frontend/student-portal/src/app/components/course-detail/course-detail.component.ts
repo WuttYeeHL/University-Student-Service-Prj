@@ -19,7 +19,8 @@ export class CourseDetailComponent {
   tableHeaders = COURSE_INFO_TABLE_HEADERS;
   qualification?: iQualificationInfo;
   downloadurl = `${COURSE_API_URL}/download?key=courseinfo-documents/`;
-  
+  private link = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -48,6 +49,22 @@ export class CourseDetailComponent {
       this.router.navigate(['/login']);
     }
 
+  }
+
+  // [href]="downloadurl + course.code + '.pdf'"
+  downloadCourseFile(code: string): void {
+    this.link = `${this.downloadurl}${code}.pdf`;
+    this.courseInfoService.downloadCourseFile(this.link).subscribe(
+      (blob: Blob) => {
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = code;
+        link.click();
+      },
+      error => {
+        console.error('Download failed', error);
+      }
+    );
   }
 
 } 
