@@ -65,9 +65,12 @@ jobs:
           Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backend.zip" -OutFile "C:\temp\backend.zip"
           # Extract the zip file
           Expand-Archive -Path "C:\temp\backend.zip" -DestinationPath "C:\test\appCourse" -Force
+
+          # By pass restriction 
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           
           # Start the application
-          Start-Process "dotnet" `
+          Start-Process "C:\Program Files\dotnet\dotnet.exe" `
             -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" `
             -WorkingDirectory "C:\test\appCourse\" `
             -RedirectStandardOutput "C:\logs\course_out.log" `
