@@ -19,12 +19,12 @@ public class StudentEnrolmentService : IStudentEnrolmentService
             from e in _db.Enrolments
             join s in _db.Students on e.StudentId equals s.Student_id
             join c in _db.Courses on e.CourseId equals c.Id
-            join q in _db.Qualifications on e.QualificationId equals q.Id
+            join q in _db.Qualifications on c.QualificationId equals q.Id
             where s.User_id == userId
             select new EnrolmentDto
             {
                 Period = e.Period,
-                QualificationId = e.QualificationId,
+                QualificationId = c.QualificationId,
                 CourseCode = c.Code,
                 CourseDescription = c.Description,
                 Status = e.Status,
