@@ -17,14 +17,7 @@ public class EnrolmentController : ControllerBase
         _enrolmentService = enrolmentService;
     }
 
-    [HttpGet("getEnrolmentByUserId")]
-    public async Task<IActionResult> GetEnrolments([FromQuery] int userId)
-    {
-        var enrolments = await _enrolmentService.GetEnrolmentsByUserIdAsync(userId);
-        return Ok(enrolments);
-    }
-
-    [HttpGet]
+    [HttpGet("getEnrolments")]
     public async Task<IActionResult> GetEnrolments()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

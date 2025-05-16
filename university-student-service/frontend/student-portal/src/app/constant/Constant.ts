@@ -10,7 +10,8 @@ export const ENROLMENT_TABLE_HEADERS = [
 
 export const COURSE_INFO_TABLE_HEADERS = ['Code', 'Description', 'Points'];
 
-export const LOGIN_API_URL = 'http://localhost:5154/api/Auth';
+export const LOGIN_API_URL = 'http://ec2-3-27-42-134.ap-southeast-2.compute.amazonaws.com:4999/api/Auth';
 export const ENROLMENT_API_URL = 'http://localhost:5269/api/Enrolment';
 export const COURSE_API_URL : string = 'http://ec2-3-27-42-134.ap-southeast-2.compute.amazonaws.com:5000/api/course';
 export const STUDENT_API_URL : string = 'http://localhost:5001/api';
+export const STUDENT_DOCUMENTS_API_URL : string = 'http://localhost:5165/api/Doc';

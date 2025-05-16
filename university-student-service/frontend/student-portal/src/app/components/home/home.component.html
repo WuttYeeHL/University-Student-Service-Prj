@@ -1,7 +1,11 @@
 <div class="home-wrapper">
   <h2 class="welcome-title">Welcome!</h2>
 
-  <div class="home-columns">
+  <div *ngIf="isLoading" class="loading-message">
+    Loading ...
+  </div>
+
+  <div *ngIf="!isLoading" class="home-columns">
     <!-- LEFT: My Schedule -->
     <div class="panel schedule-panel">
       <div class="panel-top-banner"></div>
@@ -35,7 +39,7 @@
           <h4 class="next-heading">NEXT – {{ nextWeekday }} {{ nextDate }}</h4>
           <div class="next-class-details">
             <div class="next-title">
-              Statistical Programming for Data Science
+              {{ enrolments[0].courseDescription }}
             </div>
             <div class="next-time">9:00 AM to 10:00 AM Online</div>
           </div>
@@ -52,7 +56,7 @@
               <div>
                 <div class="class-date">{{ nextDate }}</div>
                 <div class="class-title">
-                  Statistical Programming for Data Science
+                  {{ enrolments[0].courseDescription }}
                 </div>
                 <div class="class-time">10:00 to 11:00 WZ203</div>
               </div>
@@ -65,7 +69,7 @@
               </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">Data Mining and Machine Learning</div>
+                <div class="class-title">{{ enrolments[1].courseDescription }}</div>
                 <div class="class-time">11:00 to 12:00 WZ405</div>
               </div>
             </div>
@@ -77,7 +81,7 @@
               </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">Deep Learning</div>
+                <div class="class-title">{{ enrolments[2].courseDescription }}</div>
                 <div class="class-time">2:00 to 4:00 WZ702</div>
               </div>
             </div>
@@ -89,7 +93,7 @@
               </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">Cloud Computing</div>
+                <div class="class-title">{{ enrolments[3].courseDescription }}</div>
                 <div class="class-time">4:00 to 5:00 WZ805</div>
               </div>
             </div>

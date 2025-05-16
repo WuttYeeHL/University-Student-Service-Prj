@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { EnrolmentService } from '../../services/enrolment.service';
+import { Enrolment } from '../../model/interface/enrolment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +19,32 @@ export class HomeComponent {
   visibleDates: Date[] = [];
   currentMonthName = '';
   currentYear = 0;
+  enrolments: Enrolment[] = [];
+  router = inject(Router);
+  isLoading = true;
+
+  constructor(
+    private enrolmentService: EnrolmentService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    const user = this.authService.currentUser;
+    if (user?.userId) {
+      this.enrolmentService.getEnrolments(user.userId).subscribe({
+        next: (data) => {
+          this.enrolments = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to load enrolments', err);
+          this.isLoading = false;
+        },
+      });
+    } else {
+      this.router.navigate(['/login']);
+    }
+
     const today = new Date();
     this.currentMonthName = today.toLocaleString('en-NZ', { month: 'long' });
     this.currentYear = today.getFullYear();

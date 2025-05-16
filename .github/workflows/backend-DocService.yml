@@ -1,4 +1,4 @@
-name: Backend - Course API
+name: Backend - Document Serive API
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'university-student-service/backend/CourseService/**'
+      - 'university-student-service/backend/DocService/**'
 
 jobs:
   deploy-backend:
@@ -24,13 +24,14 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore NuGet packages
-      run: dotnet restore university-student-service/backend/CourseService/CourseService.csproj
+      run: dotnet restore university-student-service/backend/DocService/DocService.csproj
       
     # Step 3: Publish and Zip the .NET Application
     - name: Publish and Zip Application
       run: |
-        dotnet publish university-student-service/backend/CourseService/CourseService.csproj -c Release -o ./published
-        Compress-Archive -Path ./published/* -DestinationPath ./backend.zip
+        dotnet publish university-student-service/backend/DocService/DocService.csproj -c Release -o ./published
+          
+        Compress-Archive -Path ./published/* -DestinationPath ./backendDoc.zip
 
     # Step 4: Upload the Zip File to S3
     - name: Upload to S3
@@ -39,7 +40,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ap-southeast-2 # Adjust the region as needed
       run: |
-        aws s3 cp ./backend.zip s3://uss-storage-bucket/published/backend.zip
+        aws s3 cp ./backendDoc.zip s3://uss-storage-bucket/published/backendDoc.zip
 
     # Step 5: Deploy to Windows Server 2019 EC2 via WinRM
     - name: Deploy via WinRM
@@ -54,22 +55,24 @@ jobs:
         Invoke-Command -Session $session -ScriptBlock {
           
           # Kill the app
-            Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*CourseService.dll*'} | ForEach-Object {
+            Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*DocService.dll*'} | ForEach-Object {
                 Stop-Process -Id $_.ProcessId -Force
             }
+            
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\appCourse\* -ErrorAction SilentlyContinue
-          Remove-Item -Recurse -Force C:\temp\backend.zip -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\test\appDoc\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\temp\backendDoc.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
-          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backend.zip" -OutFile "C:\temp\backend.zip"
+          Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backendDoc.zip" -OutFile "C:\temp\backendDoc.zip"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\backend.zip" -DestinationPath "C:\test\appCourse" -Force
+          Expand-Archive -Path "C:\temp\backendDoc.zip" -DestinationPath "C:\test\appDoc" -Force
           
           # Start the application
           Start-Process "dotnet" `
-            -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" `
-            -WorkingDirectory "C:\test\appCourse\" `
-            -RedirectStandardOutput "C:\logs\course_out.log" `
-            -RedirectStandardError "C:\logs\course_err.log"         }
+            -ArgumentList "DocService.dll --urls http://0.0.0.0:5002" `
+            -WorkingDirectory "C:\test\appDoc\" `
+            -RedirectStandardOutput "C:\logs\doc_out.log" `
+            -RedirectStandardError "C:\logs\doc_err.log" 
+        }
         Remove-PSSession -Session $session
