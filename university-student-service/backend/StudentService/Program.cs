@@ -54,8 +54,6 @@ builder.Services.AddCors(options =>
             policy.WithOrigins("http://3.107.49.76")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
-                 // .AllowCredentials();
-
         });
 });
 // Load secrets from AWS
