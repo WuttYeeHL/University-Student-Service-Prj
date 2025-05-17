@@ -26,6 +26,12 @@ jobs:
     - name: Restore NuGet packages
       run: dotnet restore university-student-service/backend/StudentService/StudentService.csproj
       
+    - name: Replace connection string in appsettings.json
+      run: |
+        $configPath = "university-student-service/backend/StudentService/appsettings.json"
+        (Get-Content $configPath) -replace '__DB_CONNECTION_STRING__', '${{ secrets.DB_CONNECTION_STRING }}' | Set-Content $configPath
+      shell: pwsh
+      
     # Step 3: Publish and Zip the .NET Application
     - name: Publish and Zip Application
       run: |
@@ -60,19 +66,19 @@ jobs:
             }
             
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\appStudent\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\app\appStudent\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backendStudent.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
           Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backendStudent.zip" -OutFile "C:\temp\backendStudent.zip"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\backendStudent.zip" -DestinationPath "C:\test\appStudent" -Force
+          Expand-Archive -Path "C:\temp\backendStudent.zip" -DestinationPath "C:\app\appStudent" -Force
           
           # Start the application
-          Start-Process "dotnet" `
-            -ArgumentList "StudentService.dll --urls http://0.0.0.0:5003" `
-            -WorkingDirectory "C:\test\appStudent\" `
-            -RedirectStandardOutput "C:\logs\student_out.log" `
-            -RedirectStandardError "C:\logs\student_err.log" 
+          # Start-Process "dotnet" `
+          #   -ArgumentList "StudentService.dll --urls http://0.0.0.0:5003" `
+          #   -WorkingDirectory "C:\app\appStudent\" `
+          #   -RedirectStandardOutput "C:\logs\student_out.log" `
+          #   -RedirectStandardError "C:\logs\student_err.log" 
         }
         Remove-PSSession -Session $session
