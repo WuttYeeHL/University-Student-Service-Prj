@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { EnrolmentService } from '../../services/enrolment.service';
 import { Enrolment } from '../../model/interface/enrolment';
-import { Router } from '@angular/router';
+import { HOME_CONSTANTS } from '../../constant/Constant';
 
 @Component({
   selector: 'app-home',
@@ -12,16 +13,18 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  readonly constants = HOME_CONSTANTS;
+
   currentDate: string = '';
   nextWeekday: string = '';
   nextDate: string = '';
-  weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  weekDays = this.constants.WEEK_DAYS;
   visibleDates: Date[] = [];
   currentMonthName = '';
   currentYear = 0;
   enrolments: Enrolment[] = [];
-  router = inject(Router);
   isLoading = true;
+  router = inject(Router);
 
   constructor(
     private enrolmentService: EnrolmentService,
@@ -48,7 +51,6 @@ export class HomeComponent {
     const today = new Date();
     this.currentMonthName = today.toLocaleString('en-NZ', { month: 'long' });
     this.currentYear = today.getFullYear();
-
     this.generateVisibleDates(today);
 
     this.currentDate = today.toLocaleDateString('en-NZ', {
@@ -63,7 +65,6 @@ export class HomeComponent {
     } while (next.getDay() === 0 || next.getDay() === 6);
 
     this.nextWeekday = next.toLocaleDateString('en-NZ', { weekday: 'short' });
-
     this.nextDate = next.toLocaleDateString('en-NZ', {
       day: 'numeric',
       month: 'long',
@@ -75,14 +76,12 @@ export class HomeComponent {
     const startOfCalendar = new Date(referenceDate);
     startOfCalendar.setDate(
       referenceDate.getDate() - referenceDate.getDay() + 1
-    ); // Monday start
-
-    this.visibleDates = [];
-    for (let i = 0; i < 7; i++) {
+    );
+    this.visibleDates = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(startOfCalendar);
       date.setDate(startOfCalendar.getDate() + i);
-      this.visibleDates.push(date);
-    }
+      return date;
+    });
   }
 
   isToday(date: Date): boolean {
