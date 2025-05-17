@@ -5,7 +5,7 @@ export const HOME_CONSTANTS = {
   COMING_UP_TITLE: 'COMING UP',
   NEWS_PANEL_TITLE: 'LATEST NEWS & EVENTS',
   WEEK_DAYS: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-  COMING_UP_FIRST_SESSION: '10:00 to 11:00 WZ203',
+  COMING_UP_FIRST_SESSION: '9:00 to 10:00 Online',
   COMING_UP_SESSIONS: [
     { time: '10:00 to 11:00 WZ203' },
     { time: '11:00 to 12:00 WZ405' },
