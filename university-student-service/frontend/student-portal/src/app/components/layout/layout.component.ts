@@ -61,11 +61,16 @@ export class LayoutComponent {
       this.user = {
         name: user.username,
         email: user.email,
-        imageUrl: 'profilepic.png',
+        imageUrl: `profilepic_${user.userId}.png`,
       };
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  setDefaultImage(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = '/profilepic.png';
   }
 
   onLogout() {

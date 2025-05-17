@@ -1,5 +1,11 @@
 <div class="enrolment-container">
-  <h2>{{ qualification }}</h2>
+  <h2>
+    <a
+      [routerLink]="['/course', enrolments[0].qualificationId]"
+      class="course-link"
+      >{{ qualification }}</a
+    >
+  </h2>
   <div *ngIf="isLoading" class="loading-message">Loading enrolments...</div>
   <div *ngIf="!isLoading" class="table-wrapper">
     <table>
@@ -12,14 +18,7 @@
         <tr *ngFor="let enrolment of enrolments">
           <td>{{ enrolment.period }}</td>
           <td>{{ enrolment.courseCode }}</td>
-          <td>
-            <a
-              [routerLink]="['/course', enrolment.qualificationId]"
-              class="course-link"
-            >
-              {{ enrolment.courseDescription }}
-            </a>
-          </td>
+          <td>{{ enrolment.courseDescription }}</td>
           <td>{{ enrolment.status }}</td>
           <td>{{ enrolment.startDate | date : "dd-MMM-yyyy" }}</td>
           <td>{{ enrolment.location }}</td>
