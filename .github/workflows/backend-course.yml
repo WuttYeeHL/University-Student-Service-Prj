@@ -80,5 +80,6 @@ jobs:
           #   -ArgumentList "CourseService.dll --urls http://0.0.0.0:5000" `
           #   -WorkingDirectory "C:\app\appCourse\" `
           #   -RedirectStandardOutput "C:\logs\course_out.log" `
-          #   -RedirectStandardError "C:\logs\course_err.log"         }
+          #   -RedirectStandardError "C:\logs\course_err.log"         
+        }
         Remove-PSSession -Session $session
