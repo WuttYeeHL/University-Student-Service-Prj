@@ -61,14 +61,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-//var allowedOrigins = builder.Configuration.GetSection("AllowedCorsOrigins").Get<string[]>();
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
+if (allowedOrigins == null || allowedOrigins.Length == 0)
+    throw new InvalidOperationException("CORS origins are not configured");
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular",
         policy =>
         {
-            policy.WithOrigins("http://3.107.49.76")
+            policy.WithOrigins(allowedOrigins)
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

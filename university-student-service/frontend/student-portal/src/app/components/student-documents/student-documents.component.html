@@ -28,8 +28,8 @@
     </table>
   
     <div class="btn-group">
-      <button (click)="downloadSelected()" [disabled]="!isAnyDocumentSelected">Download</button>
-      <button (click)="deleteSelected()" [disabled]="!isAnyDocumentSelected">Delete</button>
+      <button (click)="downloadSelected()" [disabled]="!isAnyDocumentSelected" [ngClass]="{ 'active-button': isAnyDocumentSelected, 'inactive-button': !isAnyDocumentSelected }">Download</button>
+      <button (click)="deleteSelected()" [disabled]="!isAnyDocumentSelected" [ngClass]="{ 'active-button': isAnyDocumentSelected, 'inactive-button': !isAnyDocumentSelected }">Delete</button>
     </div>
   </div>
   

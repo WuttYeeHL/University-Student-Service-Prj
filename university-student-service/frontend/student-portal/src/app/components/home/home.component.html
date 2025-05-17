@@ -1,18 +1,14 @@
 <div class="home-wrapper">
-  <h2 class="welcome-title">Welcome!</h2>
+  <h2 class="welcome-title">{{ constants.TITLE }}</h2>
 
-  <div *ngIf="isLoading" class="loading-message">
-    Loading ...
-  </div>
+  <div *ngIf="isLoading" class="loading-message">Loading ...</div>
 
   <div *ngIf="!isLoading" class="home-columns">
-    <!-- LEFT: My Schedule -->
     <div class="panel schedule-panel">
       <div class="panel-top-banner"></div>
       <div class="panel-inner">
-        <h3 class="panel-title">MY SCHEDULE</h3>
+        <h3 class="panel-title">{{ constants.SCHEDULE_TITLE }}</h3>
 
-        <!-- Calender -->
         <div class="calendar-widget">
           <div class="calendar-header">
             {{ currentMonthName }} {{ currentYear }}
@@ -34,67 +30,38 @@
           </div>
         </div>
 
-        <!-- Next Section -->
         <div class="next-class-section">
-          <h4 class="next-heading">NEXT – {{ nextWeekday }} {{ nextDate }}</h4>
+          <h4 class="next-heading">
+            {{ constants.NEXT_HEADING_LABEL }} – {{ nextWeekday }}
+            {{ nextDate }}
+          </h4>
           <div class="next-class-details">
             <div class="next-title">
               {{ enrolments[0].courseDescription }}
             </div>
-            <div class="next-time">9:00 AM to 10:00 AM Online</div>
+            <div class="next-time">{{ constants.COMING_UP_FIRST_SESSION }}</div>
           </div>
         </div>
 
         <div class="coming-up-section">
-          <h3 class="coming-up-title">COMING UP</h3>
+          <h3 class="coming-up-title">{{ constants.COMING_UP_TITLE }}</h3>
           <div class="coming-up-grid">
-            <!-- Session 1 -->
-            <div class="class-card">
+            <div
+              class="class-card"
+              *ngFor="
+                let session of constants.COMING_UP_SESSIONS;
+                let i = index
+              "
+            >
               <div class="calendar-icon">
                 <i class="fas fa-calendar-alt"></i>
               </div>
               <div>
                 <div class="class-date">{{ nextDate }}</div>
                 <div class="class-title">
-                  {{ enrolments[0].courseDescription }}
+                  {{ enrolments[i].courseDescription }}
                 </div>
-                <div class="class-time">10:00 to 11:00 WZ203</div>
-              </div>
-            </div>
-
-            <!-- Session 2 -->
-            <div class="class-card">
-              <div class="calendar-icon">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div>
-                <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">{{ enrolments[1].courseDescription }}</div>
-                <div class="class-time">11:00 to 12:00 WZ405</div>
-              </div>
-            </div>
-
-            <!-- Session 3 -->
-            <div class="class-card">
-              <div class="calendar-icon">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div>
-                <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">{{ enrolments[2].courseDescription }}</div>
-                <div class="class-time">2:00 to 4:00 WZ702</div>
-              </div>
-            </div>
-
-            <!-- Session 4 -->
-            <div class="class-card">
-              <div class="calendar-icon">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div>
-                <div class="class-date">{{ nextDate }}</div>
-                <div class="class-title">{{ enrolments[3].courseDescription }}</div>
-                <div class="class-time">4:00 to 5:00 WZ805</div>
+                <div class="class-time">{{ session.time }}</div>
               </div>
             </div>
           </div>
@@ -102,66 +69,18 @@
       </div>
     </div>
 
-    <!-- RIGHT: Latest News -->
     <div class="panel news-panel">
       <div class="panel-top-banner"></div>
       <div class="panel-inner">
-        <h3 class="panel-title">LATEST NEWS & EVENTS</h3>
-
+        <h3 class="panel-title">{{ constants.NEWS_PANEL_TITLE }}</h3>
         <div class="news-card-grid">
-          <div class="news-card">
-            <img
-              class="news-card-img"
-              src="/newsitem1.png"
-              alt="Student Group Fair"
-            />
+          <div class="news-card" *ngFor="let item of constants.NEWS_ITEMS">
+            <img class="news-card-img" [src]="item.img" [alt]="item.alt" />
             <div class="news-card-content">
-              <h4 class="news-card-title">Student Group Fair</h4>
-              <p class="news-card-text">
-                Discover student clubs and organisations, browse group
-                activities, meet members and find your community on campus.
-              </p>
+              <h4 class="news-card-title">{{ item.title }}</h4>
+              <p class="news-card-text">{{ item.text }}</p>
               <div class="news-card-date">
-                <i class="fas fa-calendar-alt"></i> Thu, July 10, 2025
-              </div>
-            </div>
-          </div>
-
-          <div class="news-card">
-            <img
-              class="news-card-img"
-              src="/newsitem2.png"
-              alt="Meet and Greet"
-            />
-            <div class="news-card-content">
-              <h4 class="news-card-title">
-                International Student Meet & Greet
-              </h4>
-              <p class="news-card-text">
-                Kick off the semester by connecting with fellow students from
-                around the world.
-              </p>
-              <div class="news-card-date">
-                <i class="fas fa-calendar-alt"></i> Wed, July 16, 2025
-              </div>
-            </div>
-          </div>
-
-          <div class="news-card">
-            <img
-              class="news-card-img"
-              src="/newsitem3.png"
-              alt="Worldwide Cultural Festival"
-            />
-            <div class="news-card-content">
-              <h4 class="news-card-title">
-                University Worldwide Cultural Festival
-              </h4>
-              <p class="news-card-text">
-                A celebration of dance, food and music from around the world.
-              </p>
-              <div class="news-card-date">
-                <i class="fas fa-calendar-alt"></i> Thu, July 24, 2025
+                <i class="fas fa-calendar-alt"></i> {{ item.date }}
               </div>
             </div>
           </div>

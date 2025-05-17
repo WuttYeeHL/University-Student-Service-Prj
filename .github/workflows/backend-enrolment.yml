@@ -26,6 +26,12 @@ jobs:
     - name: Restore NuGet packages
       run: dotnet restore university-student-service/backend/EnrolmentService/EnrolmentService.csproj
       
+    - name: Replace connection string in appsettings.json
+      run: |
+        $configPath = "university-student-service/backend/EnrolmentService/appsettings.json"
+        (Get-Content $configPath) -replace '__DB_CONNECTION_STRING__', '${{ secrets.DB_CONNECTION_STRING }}' | Set-Content $configPath
+      shell: pwsh
+      
     # Step 3: Publish and Zip the .NET Application
     - name: Publish and Zip Application
       run: |
@@ -60,19 +66,19 @@ jobs:
             }
             
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\appEnrolment\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\app\appEnrolment\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backendEnrolment.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
           Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backendEnrolment.zip" -OutFile "C:\temp\backendEnrolment.zip"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\backendEnrolment.zip" -DestinationPath "C:\test\appEnrolment" -Force
+          Expand-Archive -Path "C:\temp\backendEnrolment.zip" -DestinationPath "C:\app\appEnrolment" -Force
           
           # Start the application
-          Start-Process "dotnet" `
-            -ArgumentList "EnrolmentService.dll --urls http://0.0.0.0:5001" `
-            -WorkingDirectory "C:\test\appEnrolment\" `
-            -RedirectStandardOutput "C:\logs\enrolment_out.log" `
-            -RedirectStandardError "C:\logs\enrolment_err.log" 
+          # Start-Process "dotnet" `
+          #   -ArgumentList "EnrolmentService.dll --urls http://0.0.0.0:5001" `
+          #   -WorkingDirectory "C:\app\appEnrolment\" `
+          #   -RedirectStandardOutput "C:\logs\enrolment_out.log" `
+          #   -RedirectStandardError "C:\logs\enrolment_err.log" 
         }
         Remove-PSSession -Session $session

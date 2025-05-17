@@ -1,3 +1,42 @@
+export const HOME_CONSTANTS = {
+  TITLE: 'Welcome!',
+  SCHEDULE_TITLE: 'MY SCHEDULE',
+  NEXT_HEADING_LABEL: 'NEXT',
+  COMING_UP_TITLE: 'COMING UP',
+  NEWS_PANEL_TITLE: 'LATEST NEWS & EVENTS',
+  WEEK_DAYS: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+  COMING_UP_FIRST_SESSION: '9:00 to 10:00 Online',
+  COMING_UP_SESSIONS: [
+    { time: '10:00 to 11:00 WZ203' },
+    { time: '11:00 to 12:00 WZ405' },
+    { time: '2:00 to 4:00 WZ702' },
+    { time: '4:00 to 5:00 WZ805' },
+  ],
+  NEWS_ITEMS: [
+    {
+      img: '/newsitem1.png',
+      alt: 'Student Group Fair',
+      title: 'Student Group Fair',
+      text: 'Discover student clubs and organisations, browse group activities, meet members and find your community on campus.',
+      date: 'Thu, July 10, 2025',
+    },
+    {
+      img: '/newsitem2.png',
+      alt: 'Meet and Greet',
+      title: 'International Student Meet & Greet',
+      text: 'Kick off the semester by connecting with fellow students from around the world.',
+      date: 'Wed, July 16, 2025',
+    },
+    {
+      img: '/newsitem3.png',
+      alt: 'Worldwide Cultural Festival',
+      title: 'University Worldwide Cultural Festival',
+      text: 'A celebration of dance, food and music from around the world.',
+      date: 'Thu, July 24, 2025',
+    },
+  ],
+};
+
 export const ENROLMENT_TABLE_HEADERS = [
   'Period',
   'Class',
