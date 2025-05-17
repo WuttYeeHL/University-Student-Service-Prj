@@ -25,6 +25,12 @@ jobs:
 
     - name: Restore NuGet packages
       run: dotnet restore university-student-service/backend/DocService/DocService.csproj
+
+    - name: Replace connection string in appsettings.json
+      run: |
+        $configPath = "university-student-service/backend/DocService/appsettings.json"
+        (Get-Content $configPath) -replace '__DB_CONNECTION_STRING__', '${{ secrets.DB_CONNECTION_STRING }}' | Set-Content $configPath
+      shell: pwsh
       
     # Step 3: Publish and Zip the .NET Application
     - name: Publish and Zip Application
@@ -60,19 +66,19 @@ jobs:
             }
             
           # Clean up existing files
-          Remove-Item -Recurse -Force C:\test\appDoc\* -ErrorAction SilentlyContinue
+          Remove-Item -Recurse -Force C:\app\appDoc\* -ErrorAction SilentlyContinue
           Remove-Item -Recurse -Force C:\temp\backendDoc.zip -ErrorAction SilentlyContinue
 
           # Download the backend.zip from S3
           Invoke-WebRequest -Uri "https://uss-storage-bucket.s3.ap-southeast-2.amazonaws.com/published/backendDoc.zip" -OutFile "C:\temp\backendDoc.zip"
           # Extract the zip file
-          Expand-Archive -Path "C:\temp\backendDoc.zip" -DestinationPath "C:\test\appDoc" -Force
+          Expand-Archive -Path "C:\temp\backendDoc.zip" -DestinationPath "C:\app\appDoc" -Force
           
           # Start the application
-          Start-Process "dotnet" `
-            -ArgumentList "DocService.dll --urls http://0.0.0.0:5002" `
-            -WorkingDirectory "C:\test\appDoc\" `
-            -RedirectStandardOutput "C:\logs\doc_out.log" `
-            -RedirectStandardError "C:\logs\doc_err.log" 
+          # Start-Process "dotnet" `
+          #   -ArgumentList "DocService.dll --urls http://0.0.0.0:5002" `
+          #   -WorkingDirectory "C:\app\appDoc\" `
+          #   -RedirectStandardOutput "C:\logs\doc_out.log" `
+          #   -RedirectStandardError "C:\logs\doc_err.log" 
         }
         Remove-PSSession -Session $session
