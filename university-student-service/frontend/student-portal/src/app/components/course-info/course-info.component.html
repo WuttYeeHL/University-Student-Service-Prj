@@ -1,6 +1,8 @@
 
 <div class="course-container">
 <h2>Qualifications</h2>
+<div *ngIf="isloading" class="loading-message">Loading course info...</div>
+<ng-container *ngIf="!isloading">
 
 <div *ngFor="let degree of qualifications" style="margin-bottom: 1rem;">
   <!-- Clickable Code (acts like toggle button or link) -->
@@ -32,4 +34,5 @@
     </table>
   </div>
 </div>
+</ng-container>
 </div>
