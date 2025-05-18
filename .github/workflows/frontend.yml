@@ -1,11 +1,11 @@
-name: Deploy Angular to S3
+name: Deploy Angular to Linux EC2
 
 on:
   workflow_dispatch:
   # push:
   #   branches: [main]
   #   paths:
-  #     - 'frontend/student-portal/**'  
+  #     - 'university-student-service/frontend/student-portal/**'  
 
 jobs:
   deploy:
