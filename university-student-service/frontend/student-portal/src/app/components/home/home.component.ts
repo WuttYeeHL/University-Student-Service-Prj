@@ -74,9 +74,10 @@ export class HomeComponent {
 
   generateVisibleDates(referenceDate: Date): void {
     const startOfCalendar = new Date(referenceDate);
-    startOfCalendar.setDate(
-      referenceDate.getDate() - referenceDate.getDay() + 1
-    );
+    const day = referenceDate.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    startOfCalendar.setDate(referenceDate.getDate() + diff);
+
     this.visibleDates = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(startOfCalendar);
       date.setDate(startOfCalendar.getDate() + i);
