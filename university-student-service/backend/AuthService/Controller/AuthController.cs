@@ -53,23 +53,21 @@ public class AuthController : ControllerBase
         return Ok(new { userId, loginCode, username, email });
     }
 
+    // [HttpGet("getHashedPassword")]
+    // public IActionResult GetHashedPassword([FromQuery] int id, [FromQuery] string username, [FromQuery] string email, [FromQuery] string loginCode, [FromQuery] string password)
+    // {
+    //     var user = new User
+    //     {
+    //         Id = id,
+    //         Username = username,
+    //         Email = email,
+    //         LoginCode = loginCode,
+    //     };
 
-    // It doesn't need in production
-    [HttpGet("getHashedPassword")]
-    public IActionResult GetHashedPassword([FromQuery] int id, [FromQuery] string username, [FromQuery] string email, [FromQuery] string loginCode, [FromQuery] string password)
-    {
-        var user = new User
-        {
-            Id = id,
-            Username = username,
-            Email = email,
-            LoginCode = loginCode,
-        };
+    //     string hashed = _passwordService.HashPassword(user, password);
 
-        string hashed = _passwordService.HashPassword(user, password);
-
-        return Ok(new { HashedPassword = hashed });
-    }
+    //     return Ok(new { HashedPassword = hashed });
+    // }
 
     private bool VerifyPassword(User user, string password, string hash)
     {
