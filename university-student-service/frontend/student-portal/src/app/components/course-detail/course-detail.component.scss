@@ -1,7 +1,19 @@
+.detail-title {
+  color: #1a202c;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
   }
+
+  thead {
+  background-color: #d6dae0;
+  color: #333;
+  font-weight: 700;
+}
   
   th, td {
     border: 1px solid #ccc;
