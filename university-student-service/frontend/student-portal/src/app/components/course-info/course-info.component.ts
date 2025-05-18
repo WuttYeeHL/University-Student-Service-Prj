@@ -20,6 +20,7 @@ export class CourseInfoComponent {
    downloadurl = `${COURSE_API_URL}/download?key=courseinfo-documents/`;
   router = inject(Router);
   link = '';
+  isloading = true;
 
   toggle(code: string): void {
     this.expandedCourse = this.expandedCourse === code ? null : code;
@@ -34,9 +35,15 @@ export class CourseInfoComponent {
     const user = this.authService.currentUser;
 
     if (user?.userId) {
-      this.courseInfoService.getQualificationInfo().subscribe((data: iQualificationInfo[]) => {
-        this.qualifications = data;
-      });
+      this.courseInfoService.getQualificationInfo().subscribe({ 
+          next: (data) => {
+            this.qualifications = data;
+            this.isloading = false;
+            }, error: (err) => {
+            console.error('Failed to load course info', err);
+            this.isloading = false;
+        }
+    });
     } else {
       this.router.navigate(['/login']);
     }
