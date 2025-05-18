@@ -1,0 +1,51 @@
+name: Deploy Angular to S3
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'frontend/student-portal/**'  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: university-student-service/frontend/student-portal
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular app
+      run: ng build --configuration production
+
+    - name: Copy files to EC2 via SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST_FRONT }}
+        username: ${{ secrets.EC2_USER_FRONT }}
+        key: ${{ secrets.EC2_KEY_FRONT }}
+        source: "dist/student-portal/*"
+        target: "/var/www/html"  # or wherever your site root is
+
+    - name: (Optional) Restart Nginx
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST_FRONT }}
+        username: ${{ secrets.EC2_USER_FRONT }}
+        key: ${{ secrets.EC2_KEY_FRONT }}
+        script: |
+          sudo systemctl restart nginx
