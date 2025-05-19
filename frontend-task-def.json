@@ -1,0 +1,21 @@
+{
+  "family": "studentportal-frontend-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "containerDefinitions": [
+    {
+      "name": "studentportal-frontend",
+      "image": "062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentportal-frontend:latest",				
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ]
+}
