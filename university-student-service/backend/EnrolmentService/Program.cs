@@ -17,7 +17,8 @@ builder.Services.AddCors(options =>
             "http://127.0.0.1:4200",
             "http://localhost:4200",
             "http://3.107.49.76",
-            "http://university-alb-1516057962.us-east-1.elb.amazonaws.com"
+            "http://18.98.196.74",
+            "http://18.98.196.73"
             )
               .AllowAnyHeader()
               .AllowAnyMethod());
