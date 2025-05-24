@@ -122,6 +122,13 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 //
 
+// Configure Kestrel and URL binding
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5003);
+});
+builder.WebHost.UseUrls("http://0.0.0.0:5003");
+
 var app = builder.Build();
 
 // ✅ HTTPS first
