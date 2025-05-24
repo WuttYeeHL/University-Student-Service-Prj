@@ -13,7 +13,15 @@
           "containerPort": 5003,
           "protocol": "tcp"
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/studentservice-task",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ],
   "requiresCompatibilities": ["FARGATE"],
