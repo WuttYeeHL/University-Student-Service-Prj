@@ -1,0 +1,22 @@
+{
+  "family": "studentservice-task",  
+  "taskRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+    "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "studentservice",
+      "image": "062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5003,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}
