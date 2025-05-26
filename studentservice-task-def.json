@@ -1,5 +1,5 @@
 {
-  "family": "studentservice-task",  
+  "family": "student-service-task",  
   "taskRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
     "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
   "networkMode": "awsvpc",
