@@ -41,5 +41,5 @@ jobs:
         with:
           task-definition: docservice-task-def.json
           cluster: student-university-cluster
-          service: docservice-task-service
+          service: docservice-task-service-0cjwons4
           wait-for-service-stability: true
