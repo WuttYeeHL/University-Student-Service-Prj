@@ -1,0 +1,30 @@
+{
+  "family": "courseservice-task",
+  "taskRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "courseservice",
+      "image": "062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/courseservice-task",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}

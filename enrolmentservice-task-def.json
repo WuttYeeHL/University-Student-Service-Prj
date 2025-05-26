@@ -1,0 +1,30 @@
+{
+  "family": "enrolmentservice-task",
+  "taskRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [
+    {
+      "name": "enrolmentservice",
+      "image": "062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/enrolmentservice:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5001,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/enrolmentservice-task",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }      
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}
