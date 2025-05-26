@@ -1,0 +1,45 @@
+name: Deploy CourseService to ECS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'university-student-service/backend/CourseService/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+
+      - uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker image
+        run: |
+          cd university-student-service/backend/CourseService
+          docker build -t courseservice .
+          docker tag courseservice:latest 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
+          docker push 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
+
+      - name: Render ECS task definition
+        id: render
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: courseservice-task-def.json
+          container-name: courseservice
+          image: 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
+
+      - name: Deploy to ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: courseservice-task-def.json
+          cluster: student-university-cluster
+          service: courseservice-task-service
+          wait-for-service-stability: true
