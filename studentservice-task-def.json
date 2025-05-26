@@ -1,11 +1,11 @@
 {
-  "family": "studentservice-task",  
+  "family": "student-service-task",  
   "taskRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
     "executionRoleArn": "arn:aws:iam::062365602724:role/ecsTaskExecutionRoleWithS3",
   "networkMode": "awsvpc",
   "containerDefinitions": [
     {
-      "name": "studentservice",
+      "name": "student-service",
       "image": "062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest",
       "essential": true,
       "portMappings": [
@@ -14,6 +14,12 @@
           "protocol": "tcp"
         }
       ],
+      "secrets": [
+        {
+          "name": "ConnectionStrings__DefaultConnection",
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:062365602724:secret:db-connection-yK0EZb:ConnectionStrings__DefaultConnection::"
+        }
+      ],	
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

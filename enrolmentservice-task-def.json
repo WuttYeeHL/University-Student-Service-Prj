@@ -14,6 +14,12 @@
           "protocol": "tcp"
         }
       ],
+      "secrets": [
+        {
+          "name": "ConnectionStrings__DefaultConnection",
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:062365602724:secret:db-connection-yK0EZb:ConnectionStrings__DefaultConnection::"
+        }
+      ],	      
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
