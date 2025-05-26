@@ -32,7 +32,7 @@ jobs:
         id: render
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: studentservice-task-def.json
+          task-definition: student-service-task-def.json
           container-name: student-service
           image: 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest
 
