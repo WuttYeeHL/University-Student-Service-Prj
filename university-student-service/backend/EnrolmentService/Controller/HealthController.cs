@@ -7,6 +7,6 @@ namespace EnrolmentService.Controller
     public class HealthController : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get() => Ok("Healthy");
+        public IActionResult Get() => Ok("Healthy - Enrolment Service");
     }
 }
