@@ -74,6 +74,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configure Kestrel and URL binding
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(4999);
+});
+builder.WebHost.UseUrls("http://0.0.0.0:4999");
+
 var app = builder.Build();
 // Middlewares
 if (app.Environment.IsDevelopment())

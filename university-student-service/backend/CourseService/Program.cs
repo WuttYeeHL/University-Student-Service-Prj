@@ -77,6 +77,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Configure Kestrel and URL binding
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000);
+});
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
 var app = builder.Build();
 app.UseCors("AllowAngular");
 

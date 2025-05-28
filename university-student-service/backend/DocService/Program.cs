@@ -79,7 +79,8 @@ builder.Services.AddCors(options =>
                 "http://localhost:4200",
                 "http://3.107.49.76",
                 "http://18.98.196.74",
-                "http://18.98.196.73"
+                "http://18.98.196.73",
+                "http://university-alb-425533074.ap-southeast-2.elb.amazonaws.com"
                 )
                   .AllowAnyHeader()
                   .AllowAnyMethod();
@@ -89,6 +90,13 @@ builder.Services.AddCors(options =>
 // Configure AWS RDS connection
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configure Kestrel and URL binding
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5002);
+});
+builder.WebHost.UseUrls("http://0.0.0.0:5002");
 
 var app = builder.Build();
 

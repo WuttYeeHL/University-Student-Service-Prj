@@ -23,7 +23,7 @@ namespace CourseService.Controller
         }
 
 
-        [HttpGet]
+        [HttpGet("getQualifications")]
         public async Task<IActionResult> GetQualifications()
         {
             var qualifications = await _repository.GetCoursesAsync();

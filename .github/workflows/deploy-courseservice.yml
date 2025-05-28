@@ -1,10 +1,10 @@
-name: Deploy StudentService to ECS
+name: Deploy CourseService to ECS
 
 on:
   push:
     branches: [main]
     paths:
-      - 'university-student-service/backend/StudentService/**'
+      - 'university-student-service/backend/CourseService/**'
 
 jobs:
   deploy:
@@ -23,23 +23,23 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          cd university-student-service/backend/StudentService
-          docker build -t studentservice .
-          docker tag studentservice:latest 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest
-          docker push 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest
+          cd university-student-service/backend/CourseService
+          docker build -t courseservice .
+          docker tag courseservice:latest 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
+          docker push 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
 
       - name: Render ECS task definition
         id: render
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: studentservice-task-def.json
-          container-name: student-service
-          image: 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/studentservice:latest
+          task-definition: courseservice-task-def.json
+          container-name: courseservice
+          image: 062365602724.dkr.ecr.ap-southeast-2.amazonaws.com/courseservice:latest
 
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render.outputs.task-definition }}
+          task-definition: courseservice-task-def.json
           cluster: student-university-cluster
-          service: student-service-task-service
+          service: courseservice-task-service
           wait-for-service-stability: true
