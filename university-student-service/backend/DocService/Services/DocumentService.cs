@@ -59,7 +59,7 @@ namespace DocService.Services
             return await _documentRepository.GetDocumentByIdAsync(documentId);
         }
 
-        public async Task<Stream> DownloadDocumentAsync(string documentId)
+        public async Task<GetObjectResponse> DownloadDocumentAsync(string documentId)
         {
             var document = await _documentRepository.GetDocumentByIdAsync(documentId);
             if (document == null)
@@ -74,7 +74,7 @@ namespace DocService.Services
             };
 
             var response = await _s3Client.GetObjectAsync(getRequest);
-            return response.ResponseStream;
+            return response;
         }
 
         public async Task<bool> DeleteDocumentAsync(string documentId)

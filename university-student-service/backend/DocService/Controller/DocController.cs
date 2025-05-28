@@ -31,7 +31,7 @@ namespace DocService.Controller
                     DocumentId = document.Id,
                     FileName = document.FileName,
                     S3Url = document.S3Url,
-                    UploadedAt = document.UploadedAt.ToString("o") 
+                    UploadedAt = document.UploadedAt.ToString("o")
                 };
                 return Ok(response);
             }
@@ -47,7 +47,18 @@ namespace DocService.Controller
             try
             {
                 var documents = await _documentService.GetDocumentsByStudentIdAsync(studentId);
-                return Ok(documents);
+                var response = documents.Select(doc => new
+                {
+                    Id = doc.Id,
+                    StudentId = doc.StudentId,
+                    Category = doc.Category,
+                    UploadedAt = doc.UploadedAt,
+                    UploadedBy = doc.UploadedBy,
+                    DocumentType = doc.DocumentType,
+                    FileName = doc.FileName
+                }).ToList();
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -65,7 +76,12 @@ namespace DocService.Controller
                     return NotFound("Document not found.");
 
                 var fileStream = await _documentService.DownloadDocumentAsync(documentId);
-                return File(fileStream, "application/octet-stream", document.FileName);
+                if (fileStream == null || fileStream.ResponseStream == null || fileStream.ContentLength == 0)
+                    return BadRequest("File stream is empty or invalid.");
+                string contentType = fileStream.Headers.ContentType ?? "application/octet-stream";
+                Response.Headers["Content-Disposition"] = $"attachment; filename=\"{document.FileName}\"; filename*=UTF-8''{Uri.EscapeDataString(document.FileName)}";
+
+                return File(fileStream.ResponseStream, contentType, document.FileName);
             }
             catch (Exception ex)
             {
@@ -82,7 +98,7 @@ namespace DocService.Controller
                 if (!success)
                     return NotFound("Document not found.");
 
-                return NoContent();
+                return Ok(new { message = "Document deleted successfully." });
             }
             catch (Exception ex)
             {
